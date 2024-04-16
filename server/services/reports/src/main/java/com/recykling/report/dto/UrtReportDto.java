@@ -1,8 +1,6 @@
 package com.recykling.report.dto;
 
-import com.recykling.report.entity.reports.urt.brigade.UrtBrigadeMember;
-import com.recykling.report.entity.reports.urt.brigade.UrtForkliftOperator;
-import com.recykling.report.entity.reports.urt.brigade.UrtReportLieder;
+import com.recykling.report.entity.employee.Employee;
 import com.recykling.report.valueObjects.AtnWork;
 import com.recykling.report.valueObjects.RefrigeratorCount;
 import com.recykling.report.valueObjects.RobotWork;
@@ -44,45 +42,58 @@ public class UrtReportDto {
     }
     public static class UrtReportDtoBuilder{
         private ReportData reportData;
-        private List<EmployeeDto> leaders = new ArrayList<>();
-        private List<EmployeeDto> forkliftOperators = new ArrayList<>();
-        private List<EmployeeDto> brigade = new ArrayList<>();
+        private final List<EmployeeDto> leaders = new ArrayList<>();
+        private final List<EmployeeDto> forkliftOperators = new ArrayList<>();
+        private final List<EmployeeDto> brigade = new ArrayList<>();
         private RefrigeratorCount refrigeratorCount;
         private RobotWork robotWork;
         private AtnWork atnWork;
         private EmployeesCount employeesCount;
+
+        /**
+         *
+         * @param leaders - Input List of Employee objects.
+         * @apiNote - Function maps all the Employee into EmployeeDto and saving the into leaders.
+         */
+        public UrtReportDtoBuilder leaders(List<Employee> leaders){
+            leaders.forEach(leader -> this.leaders
+                    .add(new EmployeeDto.EmployeeDtoBuilder()
+                            .employeeId(leader.getEmployeeId())
+                            .fullName(leader.getFullName())
+                            .active(leader.getActive())
+                            .build()));
+            return this;
+        }
+        /**
+         *
+         * @param forkliftOperators - Input List of Employee objects.
+         * @apiNote - Function maps all the Employee into EmployeeDto and saving the into forkliftOperators.
+         */
+        public UrtReportDtoBuilder forkliftOperators(List<Employee> forkliftOperators){
+            forkliftOperators.forEach(forkliftOperator -> this.forkliftOperators
+                    .add(new EmployeeDto.EmployeeDtoBuilder()
+                            .employeeId(forkliftOperator.getEmployeeId())
+                            .fullName(forkliftOperator.getFullName())
+                            .active(forkliftOperator.getActive())
+                            .build()));
+            return this;
+        }
+        /**
+         *
+         * @param brigade - Input List of Employee objects.
+         * @apiNote - Function maps all the Employee into EmployeeDto and saving the into brigade.
+         */
+        public UrtReportDtoBuilder brigade(List<Employee> brigade){
+            brigade.forEach(brigadeMember -> this.brigade
+                    .add(new EmployeeDto.EmployeeDtoBuilder()
+                            .employeeId(brigadeMember.getEmployeeId())
+                            .fullName(brigadeMember.getFullName())
+                            .active(brigadeMember.getActive())
+                            .build()));
+            return this;
+        }
         public UrtReportDtoBuilder reportData(ReportData reportData){
             this.reportData = reportData;
-            return this;
-        }
-        public UrtReportDtoBuilder leaders(List<UrtReportLieder> leaders){
-            leaders.forEach(leader ->
-                    this.leaders
-                            .add(new EmployeeDto.EmployeeDtoBuilder()
-                                    .employeeId(leader.getUrtEmployeeId().getEmployeeId())
-                                    .fullName(leader.getEmployee().getFullName())
-                                    .active(leader.getEmployee().getActive())
-                                    .build()));
-            return this;
-        }
-        public UrtReportDtoBuilder forkliftOperator(List<UrtForkliftOperator> forkliftOperators){
-            forkliftOperators.forEach(operator ->
-                    this.forkliftOperators
-                            .add(new EmployeeDto.EmployeeDtoBuilder()
-                                    .employeeId(operator.getEmployee().getEmployeeId())
-                                    .fullName(operator.getEmployee().getFullName())
-                                    .active(operator.getEmployee().getActive())
-                                    .build()));
-            return this;
-        }
-        public UrtReportDtoBuilder brigade(List<UrtBrigadeMember> brigade){
-            brigade.forEach(brigadeMember ->
-                    this.brigade.add(
-                            new EmployeeDto.EmployeeDtoBuilder()
-                                    .employeeId(brigadeMember.getEmployee().getEmployeeId())
-                                    .fullName(brigadeMember.getEmployee().getFullName())
-                                    .active(brigadeMember.getEmployee().getActive())
-                                    .build()));
             return this;
         }
         public UrtReportDtoBuilder employeesCount(EmployeesCount employeesCount){
