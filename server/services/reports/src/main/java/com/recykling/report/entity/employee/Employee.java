@@ -1,9 +1,6 @@
 package com.recykling.report.entity.employee;
 
-import com.recykling.report.entity.reports.urt.UrtReport;
-import com.recykling.report.entity.reports.urt.brigade.UrtBrigadeMember;
-import com.recykling.report.entity.reports.urt.brigade.UrtForkliftOperator;
-import com.recykling.report.entity.reports.urt.brigade.UrtReportLieder;
+import com.recykling.report.entity.reports.UrtReport;
 import com.recykling.report.valueObjects.FullName;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,14 +28,14 @@ public class Employee {
     @Column(name = "active")
     private Boolean active;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<UrtBrigadeMember> brigade = new ArrayList<>();
+    @ManyToMany(mappedBy = "brigade")
+    private List<UrtReport> brigade = new ArrayList<>();
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<UrtReportLieder> leaders = new ArrayList<>();
+    @ManyToMany(mappedBy = "leaders")
+    private List<UrtReport> leaders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<UrtForkliftOperator> forkliftOperators = new ArrayList<>();
+    @ManyToMany(mappedBy = "forkliftOperators")
+    private List<UrtReport> forkliftOperators = new ArrayList<>();
 
     /**
      * @BUILDER

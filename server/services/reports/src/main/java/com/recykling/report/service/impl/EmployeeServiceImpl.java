@@ -31,6 +31,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
                 .fullName(request.getFullName())
                 .active(true)
                 .build();
+
         employeeRepository.save(employee);
     }
 
@@ -60,21 +61,24 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public List<EmployeeDto> fetchEmployeeByFullName(String firstName, String lastName) {
+
         FullName fullName = new FullName(firstName, lastName);
         List<Employee> employees = employeeRepository.findAllByFullName(fullName);
 
         if(employees.isEmpty()){
-            throw new ResourceNotFoundException("Employees","firstName and lastName", firstName + " " + lastName);
+            throw new ResourceNotFoundException
+                    ("Employees","firstName and lastName", firstName + " " + lastName);
         }
 
         List<EmployeeDto> employeesDto = new ArrayList<>();
 
-        employees.forEach(employee -> employeesDto.add(
-                                        new EmployeeDto.EmployeeDtoBuilder()
-                                                .fullName(employee.getFullName())
-                                                .employeeId(employee.getEmployeeId())
-                                                .active(employee.getActive())
-                                                .build()));
+        employees.forEach(employee -> employeesDto
+                .add(new EmployeeDto.EmployeeDtoBuilder()
+                        .fullName(employee.getFullName())
+                        .employeeId(employee.getEmployeeId())
+                        .active(employee.getActive())
+                        .build()));
+
         return employeesDto;
     }
 
