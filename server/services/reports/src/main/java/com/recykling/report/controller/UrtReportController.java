@@ -5,6 +5,8 @@ import com.recykling.report.dto.UrtReportDto;
 import com.recykling.report.service.IUrtReportService;
 import com.recykling.report.dto.ResponseDto;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 /**
  * @author WiniaR21
@@ -24,7 +28,7 @@ public class UrtReportController {
     private final IUrtReportService iUrtReportService;
 
     @PostMapping(path = "/create")
-    public ResponseEntity<ResponseDto> createReport(@RequestBody @Valid RequestCreateUrtReport request){
+    public ResponseEntity<ResponseDto> createReport(@RequestBody @Valid @NotNull RequestCreateUrtReport request){
         iUrtReportService.createReport(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -32,7 +36,10 @@ public class UrtReportController {
     }
 
     @GetMapping(path = "/fetch")
-    public ResponseEntity<UrtReportDto> fetchReportById(@RequestParam Long urtReportId){
+    public ResponseEntity<UrtReportDto> fetchReportById(
+            @NotNull(message = "UrtReportId can not be null")
+            @Valid @RequestParam Long urtReportId
+    ){
         UrtReportDto urtReportDto = iUrtReportService.fetchReportById(urtReportId);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -41,16 +48,17 @@ public class UrtReportController {
 
     @GetMapping(path = "/fetch-by-data")
     public ResponseEntity<UrtReportDto> fetchReportByReportData(
-            @NotNull @Valid @RequestParam Integer year,
-            @NotNull @Valid @RequestParam Integer month,
-            @NotNull @Valid @RequestParam Integer day,
-            @NotNull @Valid @RequestParam Integer shift
 
+            @NotNull(message = "Date can not be null")
+            @Valid @RequestParam LocalDate date,
+
+            @NotNull(message = "Shift can not be null")
+            @Min(value = 1, message = "There are 3 shifts")
+            @Max(value = 3, message = "There are 3 shifts")
+            @Valid @RequestParam Integer shift
     ){
         UrtReportDto urtReportDto = iUrtReportService.fetchReportByReportData(
-                year,
-                month,
-                day,
+                date,
                 shift
         );
         return ResponseEntity

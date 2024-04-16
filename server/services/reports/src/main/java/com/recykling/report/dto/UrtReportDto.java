@@ -5,7 +5,7 @@ import com.recykling.report.valueObjects.AtnWork;
 import com.recykling.report.valueObjects.RefrigeratorCount;
 import com.recykling.report.valueObjects.RobotWork;
 import com.recykling.report.valueObjects.EmployeesCount;
-import com.recykling.report.valueObjects.ReportData;
+import com.recykling.report.valueObjects.ReportDate;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class UrtReportDto {
 
-    private ReportData reportData;
+    private ReportDate reportDate;
     private List<EmployeeDto> leaders;
     private List<EmployeeDto> forkliftOperators;
     private List<EmployeeDto> brigade;
@@ -31,7 +31,7 @@ public class UrtReportDto {
      * @BUILDER
      */
     private UrtReportDto(UrtReportDtoBuilder urtReportDtoBuilder){
-        this.reportData = urtReportDtoBuilder.reportData;
+        this.reportDate = urtReportDtoBuilder.reportDate;
         this.leaders = urtReportDtoBuilder.leaders;
         this.forkliftOperators = urtReportDtoBuilder.forkliftOperators;
         this.employeesCount = urtReportDtoBuilder.employeesCount;
@@ -41,7 +41,7 @@ public class UrtReportDto {
         this.brigade = urtReportDtoBuilder.brigade;
     }
     public static class UrtReportDtoBuilder{
-        private ReportData reportData;
+        private ReportDate reportDate;
         private final List<EmployeeDto> leaders = new ArrayList<>();
         private final List<EmployeeDto> forkliftOperators = new ArrayList<>();
         private final List<EmployeeDto> brigade = new ArrayList<>();
@@ -92,8 +92,8 @@ public class UrtReportDto {
                             .build()));
             return this;
         }
-        public UrtReportDtoBuilder reportData(ReportData reportData){
-            this.reportData = reportData;
+        public UrtReportDtoBuilder reportData(ReportDate reportDate){
+            this.reportDate = reportDate;
             return this;
         }
         public UrtReportDtoBuilder employeesCount(EmployeesCount employeesCount){

@@ -8,10 +8,11 @@ import com.recykling.report.exception.ResourceNotFoundException;
 import com.recykling.report.repository.EmployeeRepository;
 import com.recykling.report.repository.UrtReportRepository;
 import com.recykling.report.service.IUrtReportService;
-import com.recykling.report.valueObjects.ReportData;
-import com.recykling.report.valueObjects.Shift;
+import com.recykling.report.valueObjects.ReportDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 /**
  * @author WiniaR21
@@ -28,7 +29,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
     public void createReport(RequestCreateUrtReport request) {
 
         UrtReport urtReport = new UrtReport.ReportBuilder(employeeRepository)
-                .reportData(request.getReportData())
+                .reportData(request.getReportDate())
                 .leaders(request.getLeadersId())
                 .forkliftOperators(request.getForkliftOperatorsId())
                 .brigade(request.getBrigadeEmployeesIdList())
@@ -52,7 +53,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
                 () -> new ResourceNotFoundException("UrtReport", "urtReportId", urtReportId.toString())
         );
         return new UrtReportDto.UrtReportDtoBuilder()
-                .reportData(urtReport.getReportData())
+                .reportData(urtReport.getReportDate())
                 .leaders(urtReport.getLeaders())
                 .brigade(urtReport.getBrigade())
                 .forkliftOperators(urtReport.getForkliftOperators())
@@ -64,23 +65,21 @@ public class UrtReportServiceImpl implements IUrtReportService {
     }
 
     /**
-     * @param year  - Year of report.
-     * @param month - Month of report.
-     * @param day   - Day of report.
+     *
+     * @param date - Date of report.
      * @param shift - Shift of report.
      * @return - Returns matching UrtReport in UrtReportDto format.
      */
     @Override
-    public UrtReportDto fetchReportByReportData(Integer year, Integer month, Integer day, Integer shift) {
-        ReportData reportData = new ReportData(year, month, day, new Shift(shift));
-        System.out.println(reportData);
+    public UrtReportDto fetchReportByReportData(LocalDate date, Integer shift) {
+        ReportDate reportDate = new ReportDate(date, shift);
 
-        UrtReport urtReport = urtReportRepository.findByReportData(reportData).orElseThrow(
-                () -> new ResourceNotFoundException("urtReport", "reportData", reportData.toString())
+        UrtReport urtReport = urtReportRepository.findByReportDate(reportDate).orElseThrow(
+                () -> new ResourceNotFoundException("urtReport", "reportData", reportDate.toString())
         );
 
         return new UrtReportDto.UrtReportDtoBuilder()
-                .reportData(urtReport.getReportData())
+                .reportData(urtReport.getReportDate())
                 .leaders(urtReport.getLeaders())
                 .forkliftOperators(urtReport.getForkliftOperators())
                 .refrigeratorCount(urtReport.getRefrigeratorCount())

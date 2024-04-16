@@ -3,10 +3,9 @@ package com.recykling.report.request;
 
 import com.recykling.report.valueObjects.AtnWork;
 import com.recykling.report.valueObjects.RefrigeratorCount;
-import com.recykling.report.valueObjects.ReportData;
+import com.recykling.report.valueObjects.ReportDate;
 import com.recykling.report.valueObjects.RobotWork;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +20,7 @@ import java.util.List;
 public class RequestCreateUrtReport {
     @Valid
     @NotNull(message = "ReportData can not be null")
-    private ReportData reportData;
+    private ReportDate reportDate;
 
     @NotNull(message = "LiederId can not be null")
     private List<Long> leadersId;
