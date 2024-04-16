@@ -5,6 +5,7 @@ import com.recykling.report.entity.reports.ReportBase;
 import com.recykling.report.entity.reports.urt.brigade.UrtBrigadeMember;
 import com.recykling.report.entity.reports.urt.brigade.UrtForkliftOperator;
 import com.recykling.report.entity.reports.urt.brigade.UrtReportLieder;
+import com.recykling.report.repository.UrtReportRepository;
 import com.recykling.report.valueObjects.*;
 import jakarta.persistence.*;
 import lombok.*;
@@ -50,12 +51,15 @@ public class UrtReport extends ReportBase {
         this.robotWork = reportBuilder.robotWork;
         this.atnWork = reportBuilder.atnWork;
     }
+    @RequiredArgsConstructor
     public static class ReportBuilder{
         private ReportData reportData;
         private EmployeesCount employeesCount;
         private RefrigeratorCount refrigeratorCount;
         private RobotWork robotWork;
         private AtnWork atnWork;
+
+        private final UrtReportRepository urtReportRepository;
 
         public ReportBuilder reportData(ReportData reportData){
             this.reportData = reportData;

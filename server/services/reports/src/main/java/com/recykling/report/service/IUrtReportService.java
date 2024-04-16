@@ -29,5 +29,5 @@ public interface IUrtReportService {
      * @param shift - Shift of report.
      * @return - Returns matching UrtReport in UrtReportDto format.
      */
-    UrtReportDto fetchReportByReportData(Integer year, Integer month, Integer day, Shift shift);
+    UrtReportDto fetchReportByReportData(Integer year, Integer month, Integer day, Integer shift);
 }

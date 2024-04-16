@@ -13,6 +13,7 @@ import com.recykling.report.repository.EmployeeRepository;
 import com.recykling.report.repository.UrtReportRepository;
 import com.recykling.report.service.IUrtReportService;
 import com.recykling.report.valueObjects.EmployeesCount;
+import com.recykling.report.valueObjects.ReportData;
 import com.recykling.report.valueObjects.Shift;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -65,7 +66,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
             }
         });
 
-        UrtReport urtReport = new UrtReport.ReportBuilder()
+        UrtReport urtReport = new UrtReport.ReportBuilder(urtReportRepository)
                 .reportData(request.getReportData())
                 .employeesCount(new EmployeesCount(brigade.size()))
                 .refrigeratorCount(request.getRefrigeratorCount())
@@ -109,7 +110,22 @@ public class UrtReportServiceImpl implements IUrtReportService {
      * @return - Returns matching UrtReport in UrtReportDto format.
      */
     @Override
-    public UrtReportDto fetchReportByReportData(Integer year, Integer month, Integer day, Shift shift) {
-        return null;
+    public UrtReportDto fetchReportByReportData(Integer year, Integer month, Integer day, Integer shift) {
+        ReportData reportData = new ReportData(year, month, day, new Shift(shift));
+        System.out.println(reportData);
+
+        UrtReport urtReport = urtReportRepository.findByReportData(reportData).orElseThrow(
+                () -> new ResourceNotFoundException("urtReport", "reportData", reportData.toString())
+        );
+        return new UrtReportDto.UrtReportDtoBuilder()
+                .reportData(urtReport.getReportData())
+                .leaders(urtReport.getLeaders())
+                .forkliftOperator(urtReport.getForkliftOperators())
+                .refrigeratorCount(urtReport.getRefrigeratorCount())
+                .robotWork(urtReport.getRobotWork())
+                .atnWork(urtReport.getAtnWork())
+                .employeesCount(urtReport.getEmployeesCount())
+                .brigade(urtReport.getBrigade())
+                .build();
     }
 }

@@ -5,6 +5,7 @@ import com.recykling.report.dto.UrtReportDto;
 import com.recykling.report.service.IUrtReportService;
 import com.recykling.report.dto.ResponseDto;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,9 +33,28 @@ public class UrtReportController {
 
     @GetMapping(path = "/fetch")
     public ResponseEntity<UrtReportDto> fetchReportById(@RequestParam Long urtReportId){
-        UrtReportDto urtReport = iUrtReportService.fetchReportById(urtReportId);
+        UrtReportDto urtReportDto = iUrtReportService.fetchReportById(urtReportId);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(urtReport);
+                .body(urtReportDto);
+    }
+
+    @GetMapping(path = "/fetch-by-data")
+    public ResponseEntity<UrtReportDto> fetchReportByReportData(
+            @NotNull @Valid @RequestParam Integer year,
+            @NotNull @Valid @RequestParam Integer month,
+            @NotNull @Valid @RequestParam Integer day,
+            @NotNull @Valid @RequestParam Integer shift
+
+    ){
+        UrtReportDto urtReportDto = iUrtReportService.fetchReportByReportData(
+                year,
+                month,
+                day,
+                shift
+        );
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(urtReportDto);
     }
 }
