@@ -55,7 +55,7 @@ public class UrtReport extends ReportBase {
      * @BUILDER
      */
     private UrtReport(ReportBuilder reportBuilder){
-        this.setReportData(reportBuilder.reportData);
+        this.setReportDate(reportBuilder.reportDate);
         this.brigade = reportBuilder.brigade;
         this.leaders = reportBuilder.leaders;
         this.forkliftOperators = reportBuilder.forkliftOperators;
@@ -67,7 +67,7 @@ public class UrtReport extends ReportBase {
     }
     @RequiredArgsConstructor
     public static class ReportBuilder{
-        private ReportData reportData;
+        private ReportDate reportDate;
         private RefrigeratorCount refrigeratorCount;
         private RobotWork robotWork;
         private AtnWork atnWork;
@@ -77,8 +77,8 @@ public class UrtReport extends ReportBase {
 
         private final EmployeeRepository employeeRepository;
 
-        public ReportBuilder reportData(ReportData reportData){
-            this.reportData = reportData;
+        public ReportBuilder reportData(ReportDate reportDate){
+            this.reportDate = reportDate;
             return this;
         }
         public ReportBuilder refrigeratorCount(RefrigeratorCount refrigeratorCount){

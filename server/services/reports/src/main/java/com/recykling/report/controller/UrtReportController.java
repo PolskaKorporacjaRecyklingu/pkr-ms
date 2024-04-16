@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 /**
  * @author WiniaR21
  */
@@ -41,16 +43,12 @@ public class UrtReportController {
 
     @GetMapping(path = "/fetch-by-data")
     public ResponseEntity<UrtReportDto> fetchReportByReportData(
-            @NotNull @Valid @RequestParam Integer year,
-            @NotNull @Valid @RequestParam Integer month,
-            @NotNull @Valid @RequestParam Integer day,
+            @NotNull @Valid @RequestParam LocalDate date,
             @NotNull @Valid @RequestParam Integer shift
 
     ){
         UrtReportDto urtReportDto = iUrtReportService.fetchReportByReportData(
-                year,
-                month,
-                day,
+                date,
                 shift
         );
         return ResponseEntity

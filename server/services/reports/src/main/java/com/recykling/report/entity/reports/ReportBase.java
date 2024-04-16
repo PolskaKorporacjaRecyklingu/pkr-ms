@@ -1,7 +1,7 @@
 package com.recykling.report.entity.reports;
 
 import com.recykling.report.valueObjects.EmployeesCount;
-import com.recykling.report.valueObjects.ReportData;
+import com.recykling.report.valueObjects.ReportDate;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +15,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ReportBase {
-    private ReportData reportData;
+    private ReportDate reportDate;
     private EmployeesCount employeesCount;
 }
