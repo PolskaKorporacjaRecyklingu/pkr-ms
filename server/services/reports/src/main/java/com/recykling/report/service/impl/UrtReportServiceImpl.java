@@ -1,10 +1,11 @@
 package com.recykling.report.service.impl;
 
+import com.recykling.report.entity.reports.urt.brigade.UrtBrigadeMember;
 import com.recykling.report.request.RequestCreateUrtReport;
 import com.recykling.report.dto.UrtReportDto;
 
 import com.recykling.report.entity.employee.Employee;
-import com.recykling.report.entity.reports.urtReport.UrtReport;
+import com.recykling.report.entity.reports.urt.UrtReport;
 import com.recykling.report.exception.ResourceNotFoundException;
 import com.recykling.report.repository.EmployeeRepository;
 import com.recykling.report.repository.UrtReportRepository;
@@ -56,14 +57,14 @@ public class UrtReportServiceImpl implements IUrtReportService {
                 .atnWork(request.getAtnWork())
                 .build();
 
-        urtReport.createBrigade(brigade);
+        brigade.forEach(brigadeMember -> urtReport.addToBrigade(new UrtBrigadeMember(urtReport, brigadeMember)));
 
-        if (request.getForkliftOperatorId() != null) {
+      /*  if (request.getForkliftOperatorId() != null) {
             Employee forkliftOperator = employeeRepository.findById(request.getForkliftOperatorId()).orElseThrow(
                     () -> new ResourceNotFoundException("Employee", "forkliftOperatorId", request.getForkliftOperatorId().toString())
             );
             urtReport.setForkliftOperator(forkliftOperator);
-        }
+        }*/
         urtReportRepository.save(urtReport);
     }
 
@@ -78,8 +79,8 @@ public class UrtReportServiceImpl implements IUrtReportService {
         );
         return new UrtReportDto.UrtReportDtoBuilder()
                 .reportData(urtReport.getReportData())
-                .lieder(urtReport.getLieder())
-                .forkliftOperator(urtReport.getForkliftOperator())
+                //.lieder(urtReport.getLieder())
+                //.forkliftOperator(urtReport.getForkliftOperator())
                 .refrigeratorCount(urtReport.getRefrigeratorCount())
                 .robotWork(urtReport.getRobotWork())
                 .atnWork(urtReport.getAtnWork())

@@ -1,6 +1,7 @@
 package com.recykling.report.dto;
 
 import com.recykling.report.entity.employee.Employee;
+import com.recykling.report.entity.reports.urt.brigade.UrtBrigadeMember;
 import com.recykling.report.valueObjects.AtnWork;
 import com.recykling.report.valueObjects.RefrigeratorCount;
 import com.recykling.report.valueObjects.RobotWork;
@@ -85,13 +86,13 @@ public class UrtReportDto {
             this.atnWork = atnWork;
             return this;
         }
-        public UrtReportDtoBuilder brigade(List<Employee> brigade){
-            brigade.forEach(employee ->
+        public UrtReportDtoBuilder brigade(List<UrtBrigadeMember> brigade){
+            brigade.forEach(brigadeMember ->
                     this.brigade.add(
                             new EmployeeDto.EmployeeDtoBuilder()
-                                    .fullName(employee.getFullName())
-                                    .active(employee.getActive())
-                                    .employeeId(employee.getEmployeeId())
+                                    .fullName(brigadeMember.getEmployee().getFullName())
+                                    .active(brigadeMember.getEmployee().getActive())
+                                    .employeeId(brigadeMember.getEmployee().getEmployeeId())
                                     .build()));
 
             return this;

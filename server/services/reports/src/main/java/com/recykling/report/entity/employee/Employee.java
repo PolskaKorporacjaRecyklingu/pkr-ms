@@ -1,10 +1,12 @@
 package com.recykling.report.entity.employee;
 
-import com.recykling.report.entity.reports.urtReport.UrtReport;
+import com.recykling.report.entity.reports.urt.UrtReport;
+import com.recykling.report.entity.reports.urt.brigade.UrtBrigadeMember;
 import com.recykling.report.valueObjects.FullName;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,25 +29,17 @@ public class Employee {
     @Column(name = "active")
     private Boolean active;
 
-    @ManyToMany(mappedBy = "brigade")
-    private List<UrtReport> brigadeMember;
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<UrtBrigadeMember> brigade = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "lieder")
-    private List<UrtReport> leadingUrtReport;
-
-    @ManyToMany(mappedBy = "forkliftOperator")
-    private List<UrtReport> forkliftOperatorReport;
-
-
-    public void addToBrigadeMember(UrtReport urtReport){
-        if (!brigadeMember.contains(urtReport)){
-            brigadeMember.add(urtReport);
+    public void addToBrigade(UrtBrigadeMember urtBrigadeMember){
+        if(!brigade.contains(urtBrigadeMember)){
+            brigade.add(urtBrigadeMember);
         }
     }
-    public void removeFromBrigadeMember(UrtReport urtReport){
-        brigadeMember.remove(urtReport);
+    public void removeFromBrigade(UrtBrigadeMember urtBrigadeMember){
+        brigade.remove(urtBrigadeMember);
     }
-
     /**
      * @BUILDER
      */
