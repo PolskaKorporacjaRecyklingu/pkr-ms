@@ -9,11 +9,11 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "urt_report_brigade")
+@Table(name = "urt_report_forklift_operator")
 @NoArgsConstructor
 @Getter
 @Setter
-public class UrtBrigadeMember {
+public class UrtForkliftOperator {
     @EmbeddedId
     private UrtEmployeeId urtEmployeeId = new UrtEmployeeId();
 
@@ -27,7 +27,7 @@ public class UrtBrigadeMember {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    public UrtBrigadeMember(UrtReport urtReport, Employee employee) {
+    public UrtForkliftOperator(UrtReport urtReport, Employee employee) {
         this.urtReport = urtReport;
         this.employee = employee;
 
@@ -35,17 +35,17 @@ public class UrtBrigadeMember {
         setInEmployee();
     }
     private void setInReport(){
-        if(!urtReport.getBrigade().contains(this)){
-            urtReport.getBrigade().add(this);
+        if(!urtReport.getForkliftOperators().contains(this)){
+            urtReport.getForkliftOperators().add(this);
         }
     }
     private void setInEmployee(){
-        if(!employee.getBrigade().contains(this)){
-            employee.getBrigade().add(this);
+        if(!employee.getForkliftOperators().contains(this)){
+            employee.getForkliftOperators().add(this);
         }
     }
     public void remove(){
-        urtReport.getBrigade().remove(this);
-        employee.getBrigade().remove(this);
+        urtReport.getForkliftOperators().remove(this);
+        employee.getForkliftOperators().remove(this);
     }
 }

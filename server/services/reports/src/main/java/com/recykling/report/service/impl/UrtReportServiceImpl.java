@@ -1,6 +1,8 @@
 package com.recykling.report.service.impl;
 
 import com.recykling.report.entity.reports.urt.brigade.UrtBrigadeMember;
+import com.recykling.report.entity.reports.urt.brigade.UrtForkliftOperator;
+import com.recykling.report.entity.reports.urt.brigade.UrtReportLieder;
 import com.recykling.report.request.RequestCreateUrtReport;
 import com.recykling.report.dto.UrtReportDto;
 
@@ -33,10 +35,8 @@ public class UrtReportServiceImpl implements IUrtReportService {
     @Override
     public void createReport(RequestCreateUrtReport request) {
         List<Employee> brigade = new ArrayList<>();
-
-        Employee lieder = employeeRepository.findById(request.getLiederId()).orElseThrow(
-                () -> new ResourceNotFoundException("Employee", "liederId", request.getLiederId().toString())
-        );
+        List<Employee> leaders = new ArrayList<>();
+        List<Employee> forkliftOperators = new ArrayList<>();
 
         request.getBrigadeEmployeesIdList().forEach(employeeId ->{
             Optional<Employee> employee = employeeRepository.findById(employeeId);
@@ -47,24 +47,36 @@ public class UrtReportServiceImpl implements IUrtReportService {
             }
         });
 
+        request.getLeadersId().forEach(leaderId -> {
+            Optional<Employee> leader = employeeRepository.findById(leaderId);
+            if (leader.isEmpty()){
+                throw new ResourceNotFoundException("Employee", "leaderId", leaderId.toString());
+            } else {
+                leaders.add(leader.get());
+            }
+        });
+
+        request.getForkliftOperatorsId().forEach(forkliftOperatorId -> {
+            Optional<Employee> forkliftOperator = employeeRepository.findById(forkliftOperatorId);
+            if (forkliftOperator.isEmpty()){
+                throw new ResourceNotFoundException("Employee", "forkliftOperatorId", forkliftOperatorId.toString());
+            } else {
+                forkliftOperators.add(forkliftOperator.get());
+            }
+        });
 
         UrtReport urtReport = new UrtReport.ReportBuilder()
                 .reportData(request.getReportData())
-                .lieder(lieder)
                 .employeesCount(new EmployeesCount(brigade.size()))
                 .refrigeratorCount(request.getRefrigeratorCount())
                 .robotWork(request.getRobotWork())
                 .atnWork(request.getAtnWork())
                 .build();
 
-        brigade.forEach(brigadeMember -> urtReport.addToBrigade(new UrtBrigadeMember(urtReport, brigadeMember)));
+        brigade.forEach(employee -> new UrtBrigadeMember(urtReport, employee));
+        leaders.forEach(employee -> new UrtReportLieder(urtReport, employee));
+        forkliftOperators.forEach(employee -> new UrtForkliftOperator(urtReport, employee));
 
-      /*  if (request.getForkliftOperatorId() != null) {
-            Employee forkliftOperator = employeeRepository.findById(request.getForkliftOperatorId()).orElseThrow(
-                    () -> new ResourceNotFoundException("Employee", "forkliftOperatorId", request.getForkliftOperatorId().toString())
-            );
-            urtReport.setForkliftOperator(forkliftOperator);
-        }*/
         urtReportRepository.save(urtReport);
     }
 
@@ -79,8 +91,8 @@ public class UrtReportServiceImpl implements IUrtReportService {
         );
         return new UrtReportDto.UrtReportDtoBuilder()
                 .reportData(urtReport.getReportData())
-                //.lieder(urtReport.getLieder())
-                //.forkliftOperator(urtReport.getForkliftOperator())
+                .leaders(urtReport.getLeaders())
+                .forkliftOperator(urtReport.getForkliftOperators())
                 .refrigeratorCount(urtReport.getRefrigeratorCount())
                 .robotWork(urtReport.getRobotWork())
                 .atnWork(urtReport.getAtnWork())

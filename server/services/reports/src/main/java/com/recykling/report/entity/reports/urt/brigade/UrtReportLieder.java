@@ -29,5 +29,22 @@ public class UrtReportLieder {
     public UrtReportLieder(UrtReport urtReport, Employee employee) {
         this.urtReport = urtReport;
         this.employee = employee;
+
+        setInReport();
+        setInEmployee();
+    }
+    private void setInReport(){
+        if(!urtReport.getLeaders().contains(this)){
+            urtReport.getLeaders().add(this);
+        }
+    }
+    private void setInEmployee(){
+        if(!employee.getLeaders().contains(this)){
+            employee.getLeaders().add(this);
+        }
+    }
+    public void remove(){
+        urtReport.getLeaders().remove(this);
+        employee.getLeaders().remove(this);
     }
 }

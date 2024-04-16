@@ -2,6 +2,8 @@ package com.recykling.report.entity.employee;
 
 import com.recykling.report.entity.reports.urt.UrtReport;
 import com.recykling.report.entity.reports.urt.brigade.UrtBrigadeMember;
+import com.recykling.report.entity.reports.urt.brigade.UrtForkliftOperator;
+import com.recykling.report.entity.reports.urt.brigade.UrtReportLieder;
 import com.recykling.report.valueObjects.FullName;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,14 +34,12 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<UrtBrigadeMember> brigade = new ArrayList<>();
 
-    public void addToBrigade(UrtBrigadeMember urtBrigadeMember){
-        if(!brigade.contains(urtBrigadeMember)){
-            brigade.add(urtBrigadeMember);
-        }
-    }
-    public void removeFromBrigade(UrtBrigadeMember urtBrigadeMember){
-        brigade.remove(urtBrigadeMember);
-    }
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<UrtReportLieder> leaders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<UrtForkliftOperator> forkliftOperators = new ArrayList<>();
+
     /**
      * @BUILDER
      */

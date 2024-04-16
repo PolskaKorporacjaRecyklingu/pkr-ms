@@ -24,11 +24,13 @@ public class RequestCreateUrtReport {
     private ReportData reportData;
 
     @NotNull(message = "LiederId can not be null")
-    @Min(value = 1, message = "Minimal id of lieder is 1")
-    private Long liederId;
+    private List<Long> leadersId;
 
-    @Min(value = 1, message = "Minimal id of forkliftOperatorId is 1")
-    private Long forkliftOperatorId;
+    @NotNull(message = "ForkliftOperatorsId can not be null")
+    private List<Long> forkliftOperatorsId;
+
+    @NotNull
+    private List<Long> brigadeEmployeesIdList;
 
     @Valid @NotNull(message = "RefrigeratorCount can not be null")
     private RefrigeratorCount refrigeratorCount;
@@ -39,6 +41,5 @@ public class RequestCreateUrtReport {
     @Valid @NotNull(message = "AtnWork can not be null")
     private AtnWork atnWork;
 
-    @NotNull
-    private List<Long> brigadeEmployeesIdList;
+
 }
