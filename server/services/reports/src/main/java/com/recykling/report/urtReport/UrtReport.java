@@ -1,9 +1,12 @@
 package com.recykling.report.urtReport;
 
-import com.recykling.report.urtReport.entities.alCuRefrigerator.AlCuRefrigeratorWeights;
-import com.recykling.report.urtReport.entities.oilFromAggregatesWeights.OilFromAggregatesWeights;
-import com.recykling.report.urtReport.entities.psAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
-import com.recykling.report.urtReport.entities.refrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
+import com.recykling.report.urtReport.entities.urtAggregatesWithOilFromWarehouse.AggregatesWithOilFromWarehouseWeights;
+import com.recykling.report.urtReport.entities.urtAggregatesWithOilWeights.AggregatesWithOilWeights;
+import com.recykling.report.urtReport.entities.urtAlCuRefrigerator.AlCuRefrigeratorWeights;
+import com.recykling.report.urtReport.entities.urtAluminium.AluminiumWeights;
+import com.recykling.report.urtReport.entities.urtOilFromAggregatesWeights.OilFromAggregatesWeights;
+import com.recykling.report.urtReport.entities.urtPsAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
+import com.recykling.report.urtReport.entities.urtRefrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
 import com.recykling.report.urtReport.entities.urtReportHistory.UrtReportHistory;
 import com.recykling.report.urtReport.entities.urtAggregatesWithoutOilWeights.AggregatesWithoutOilWeights;
 import com.recykling.report.employee.Employee;
@@ -75,6 +78,15 @@ public class UrtReport extends ReportBase {
     @OneToMany(mappedBy = "urtReport")
     private List<PsAbsRefrigeratorWeights> psAbsRefrigeratorWeights;
     private Integer psAbsRefrigeratorIncompleteWeight;
+
+    @OneToMany(mappedBy = "urtReport")
+    private List<AggregatesWithOilWeights> aggregatesWithOilWeights;
+
+    @OneToMany(mappedBy = "urtReport")
+    private List<AluminiumWeights> aluminiumWeights;
+
+    @OneToMany(mappedBy = "urtReport")
+    private List<AggregatesWithOilFromWarehouseWeights> aggregatesWithOilFromWarehouseWeights;
 
     /**
      *

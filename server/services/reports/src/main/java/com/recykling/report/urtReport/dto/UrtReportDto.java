@@ -1,13 +1,13 @@
 package com.recykling.report.urtReport.dto;
 
-import com.recykling.report.urtReport.entities.alCuRefrigerator.AlCuRefrigeratorWeights;
-import com.recykling.report.urtReport.entities.alCuRefrigerator.dto.AlCuRefrigeratorWeightsDto;
-import com.recykling.report.urtReport.entities.oilFromAggregatesWeights.OilFromAggregatesWeights;
-import com.recykling.report.urtReport.entities.oilFromAggregatesWeights.dto.OilFromAggregatesWeightsDto;
-import com.recykling.report.urtReport.entities.psAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
-import com.recykling.report.urtReport.entities.psAbsRefrigeratorWeights.dto.PsAbsRefrigeratorWeightsDto;
-import com.recykling.report.urtReport.entities.refrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
-import com.recykling.report.urtReport.entities.refrigeratorPowerCableWeights.dto.RefrigeratorPowerCableWeightsDto;
+import com.recykling.report.urtReport.entities.urtAlCuRefrigerator.AlCuRefrigeratorWeights;
+import com.recykling.report.urtReport.entities.urtAlCuRefrigerator.dto.AlCuRefrigeratorWeightsDto;
+import com.recykling.report.urtReport.entities.urtOilFromAggregatesWeights.OilFromAggregatesWeights;
+import com.recykling.report.urtReport.entities.urtOilFromAggregatesWeights.dto.OilFromAggregatesWeightsDto;
+import com.recykling.report.urtReport.entities.urtPsAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
+import com.recykling.report.urtReport.entities.urtPsAbsRefrigeratorWeights.dto.PsAbsRefrigeratorWeightsDto;
+import com.recykling.report.urtReport.entities.urtRefrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
+import com.recykling.report.urtReport.entities.urtRefrigeratorPowerCableWeights.dto.RefrigeratorPowerCableWeightsDto;
 import com.recykling.report.urtReport.entities.urtAggregatesWithoutOilWeights.dto.AggregatesWithoutOilDto;
 import com.recykling.report.employee.dto.EmployeeDto;
 import com.recykling.report.urtReport.entities.urtReportHistory.UrtReportHistory;

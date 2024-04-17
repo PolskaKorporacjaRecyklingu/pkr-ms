@@ -1,13 +1,13 @@
 package com.recykling.report.urtReport.service.impl;
 
-import com.recykling.report.urtReport.entities.alCuRefrigerator.AlCuRefrigeratorWeights;
-import com.recykling.report.urtReport.entities.alCuRefrigerator.repo.AlCuRefrigeratorWeightsRepository;
-import com.recykling.report.urtReport.entities.oilFromAggregatesWeights.OilFromAggregatesWeights;
-import com.recykling.report.urtReport.entities.oilFromAggregatesWeights.repo.OilFromAggregatesWeightsRepository;
-import com.recykling.report.urtReport.entities.psAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
-import com.recykling.report.urtReport.entities.psAbsRefrigeratorWeights.repo.PsAbsRefrigeratorWeightsRepository;
-import com.recykling.report.urtReport.entities.refrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
-import com.recykling.report.urtReport.entities.refrigeratorPowerCableWeights.repo.RefrigeratorPowerCableWeightsRepository;
+import com.recykling.report.urtReport.entities.urtAlCuRefrigerator.AlCuRefrigeratorWeights;
+import com.recykling.report.urtReport.entities.urtAlCuRefrigerator.repo.AlCuRefrigeratorWeightsRepository;
+import com.recykling.report.urtReport.entities.urtOilFromAggregatesWeights.OilFromAggregatesWeights;
+import com.recykling.report.urtReport.entities.urtOilFromAggregatesWeights.repo.OilFromAggregatesWeightsRepository;
+import com.recykling.report.urtReport.entities.urtPsAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
+import com.recykling.report.urtReport.entities.urtPsAbsRefrigeratorWeights.repo.PsAbsRefrigeratorWeightsRepository;
+import com.recykling.report.urtReport.entities.urtRefrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
+import com.recykling.report.urtReport.entities.urtRefrigeratorPowerCableWeights.repo.RefrigeratorPowerCableWeightsRepository;
 import com.recykling.report.urtReport.service.IUrtReportService;
 import com.recykling.report.urtReport.entities.urtReportHistory.UrtReportHistory;
 import com.recykling.report.urtReport.entities.urtAggregatesWithoutOilWeights.AggregatesWithoutOilWeights;
