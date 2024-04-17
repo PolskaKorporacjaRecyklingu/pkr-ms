@@ -1,5 +1,6 @@
 package com.recykling.report.entity.reports;
 
+import com.recykling.report.entity.UrtReportHistory;
 import com.recykling.report.entity.employee.Employee;
 import com.recykling.report.exception.ResourceNotFoundException;
 import com.recykling.report.repository.EmployeeRepository;
@@ -50,6 +51,8 @@ public class UrtReport extends ReportBase {
     private RobotWork robotWork;
     private AtnWork atnWork;
 
+    @OneToMany(mappedBy = "urtReport")
+    private List<UrtReportHistory> urtReportHistories = new ArrayList<>();
     /**
      *
      * @BUILDER
