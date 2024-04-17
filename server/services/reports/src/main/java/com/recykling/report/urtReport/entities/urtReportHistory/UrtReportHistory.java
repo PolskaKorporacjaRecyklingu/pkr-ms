@@ -1,4 +1,4 @@
-package com.recykling.report.urtReport.urtReportHistory;
+package com.recykling.report.urtReport.entities.urtReportHistory;
 
 import com.recykling.report.urtReport.UrtReport;
 import com.recykling.report.valueObjects.ReportHistory;

@@ -1,7 +1,6 @@
-package com.recykling.report.urtReport.urtAggregatesWithoutOulWeights;
+package com.recykling.report.urtReport.entities.urtAggregatesWithoutOilWeights;
 
 import com.recykling.report.urtReport.UrtReport;
-import com.recykling.report.valueObjects.Weight;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +14,15 @@ public class AggregatesWithoutOilWeights {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "aggregates_without_oil_weights_id")
     private Long aggregatesWithoutOilWeightsId;
+
     private Integer weight;
+
     @ManyToOne
     @JoinColumn(name="urt_report_id", nullable = false)
     private UrtReport urtReport;
 
-    public AggregatesWithoutOilWeights(Weight weight, UrtReport urtReport) {
-        this.weight = weight.weight();
+    public AggregatesWithoutOilWeights(Integer weight, UrtReport urtReport) {
+        this.weight = weight;
         this.urtReport = urtReport;
     }
 }

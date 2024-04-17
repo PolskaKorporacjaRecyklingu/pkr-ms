@@ -1,7 +1,10 @@
 package com.recykling.report.urtReport;
 
-import com.recykling.report.urtReport.urtReportHistory.UrtReportHistory;
-import com.recykling.report.urtReport.urtAggregatesWithoutOulWeights.AggregatesWithoutOilWeights;
+import com.recykling.report.urtReport.entities.alCuRefrigerator.AlCuRefrigeratorWeights;
+import com.recykling.report.urtReport.entities.oilFromAggregatesWeights.OilFromAggregatesWeights;
+import com.recykling.report.urtReport.entities.refrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
+import com.recykling.report.urtReport.entities.urtReportHistory.UrtReportHistory;
+import com.recykling.report.urtReport.entities.urtAggregatesWithoutOilWeights.AggregatesWithoutOilWeights;
 import com.recykling.report.employee.Employee;
 import com.recykling.report.exception.ResourceNotFoundException;
 import com.recykling.report.employee.repo.EmployeeRepository;
@@ -58,6 +61,15 @@ public class UrtReport extends ReportBase {
     @OneToMany(mappedBy = "urtReport")
     private List<AggregatesWithoutOilWeights> aggregatesWithoutOil;
 
+    @OneToMany(mappedBy = "urtReport")
+    private List<AlCuRefrigeratorWeights> alCuRefrigeratorWeights;
+    private Integer alCuPackageIncompleteWeight;
+
+    @OneToMany(mappedBy = "urtReport")
+    private List<RefrigeratorPowerCableWeights> refrigeratorPowerCableWeights;
+
+    @OneToMany(mappedBy = "urtReport")
+    private List<OilFromAggregatesWeights> oilFromAggregatesWeights;
     /**
      *
      * @BUILDER
@@ -70,6 +82,7 @@ public class UrtReport extends ReportBase {
         this.refrigeratorCount = reportBuilder.refrigeratorCount;
         this.robotWork = reportBuilder.robotWork;
         this.atnWork = reportBuilder.atnWork;
+        this.alCuPackageIncompleteWeight = reportBuilder.alCuPackageIncompleteWeight;
 
         this.setEmployeesCount(new EmployeesCount(brigade.size()));
     }
@@ -81,11 +94,16 @@ public class UrtReport extends ReportBase {
         private AtnWork atnWork;
         private List<Employee> brigade = new ArrayList<>();
         private List<Employee> leaders = new ArrayList<>();
+        private Integer alCuPackageIncompleteWeight;
         private List<Employee> forkliftOperators = new ArrayList<>();
 
         private final EmployeeRepository employeeRepository;
         public ReportBuilder reportData(ReportDate reportDate){
             this.reportDate = reportDate;
+            return this;
+        }
+        public ReportBuilder alCuPackageIncomplete(Integer alCuPackageIncompleteWeight){
+            this.alCuPackageIncompleteWeight = alCuPackageIncompleteWeight;
             return this;
         }
         public ReportBuilder refrigeratorCount(RefrigeratorCount refrigeratorCount){

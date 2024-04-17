@@ -1,6 +1,6 @@
-package com.recykling.report.urtReport.urtReportHistory.repo;
+package com.recykling.report.urtReport.entities.urtReportHistory.repo;
 
-import com.recykling.report.urtReport.urtReportHistory.UrtReportHistory;
+import com.recykling.report.urtReport.entities.urtReportHistory.UrtReportHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

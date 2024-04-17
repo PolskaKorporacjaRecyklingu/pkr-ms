@@ -1,6 +1,6 @@
-package com.recykling.report.urtReport.urtAggregatesWithoutOulWeights.dto;
+package com.recykling.report.urtReport.entities.urtAggregatesWithoutOilWeights.dto;
 
-import com.recykling.report.urtReport.urtAggregatesWithoutOulWeights.AggregatesWithoutOilWeights;
+import com.recykling.report.urtReport.entities.urtAggregatesWithoutOilWeights.AggregatesWithoutOilWeights;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,8 +13,8 @@ public class AggregatesWithoutOilDto {
     private Integer count;
     private Integer sumWeight;
 
-    public AggregatesWithoutOilDto(List<AggregatesWithoutOilWeights> aggregatesWithoutOil) {
-       aggregatesWithoutOil
+    public AggregatesWithoutOilDto(List<AggregatesWithoutOilWeights> weights) {
+        weights
                .forEach(weight ->
                        aggregatesWithoutOilWeights.add(weight.getWeight()));
        this.count = aggregatesWithoutOilWeights.size();

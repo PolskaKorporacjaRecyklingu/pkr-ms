@@ -1,6 +1,6 @@
-package com.recykling.report.urtReport.urtAggregatesWithoutOulWeights.repo;
+package com.recykling.report.urtReport.entities.urtAggregatesWithoutOilWeights.repo;
 
-import com.recykling.report.urtReport.urtAggregatesWithoutOulWeights.AggregatesWithoutOilWeights;
+import com.recykling.report.urtReport.entities.urtAggregatesWithoutOilWeights.AggregatesWithoutOilWeights;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
