@@ -37,7 +37,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
                 .reportData(request.getReportDate())
                 .leaders(request.getLeadersId())
                 .forkliftOperators(request.getForkliftOperatorsId())
-                .brigade(request.getBrigadeEmployeesIdList())
+                .brigade(request.getBrigadeEmployeesId())
                 .refrigeratorCount(request.getRefrigeratorCount())
                 .robotWork(request.getRobotWork())
                 .atnWork(request.getAtnWork())

@@ -49,6 +49,7 @@ public class UrtReportDto {
         private AtnWork atnWork;
         private EmployeesCount employeesCount;
         private List<ReportHistory> reportHistories = new ArrayList<>();
+
         /**
          *
          * @param leaders - Input List of Employee objects.
