@@ -26,7 +26,7 @@ public class RequestCreateUrtReport {
     private List<Long> forkliftOperatorsId;
 
     @NotNull
-    private List<Long> brigadeEmployeesIdList;
+    private List<Long> brigadeEmployeesId;
 
     @Valid @NotNull(message = "RefrigeratorCount can not be null")
     private RefrigeratorCount refrigeratorCount;
