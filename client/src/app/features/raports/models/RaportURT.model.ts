@@ -72,7 +72,7 @@ export class RaportUrtToRaportUrtDTOAdapter implements Adapter<RaportURTPost> {
   adapt(item: RaportUrt): RaportURTPost {
     let reportData = {
       year: item.date.getFullYear(),
-      month: item.date.getFullYear()+1,
+      month: item.date.getMonth()+1,
       day: item.date.getDay(),
       shift: {
         shift: item.shift
