@@ -1,11 +1,8 @@
 package com.recykling.report.dto;
 
+import com.recykling.report.entity.UrtReportHistory;
 import com.recykling.report.entity.employee.Employee;
-import com.recykling.report.valueObjects.AtnWork;
-import com.recykling.report.valueObjects.RefrigeratorCount;
-import com.recykling.report.valueObjects.RobotWork;
-import com.recykling.report.valueObjects.EmployeesCount;
-import com.recykling.report.valueObjects.ReportDate;
+import com.recykling.report.valueObjects.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
@@ -26,6 +23,7 @@ public class UrtReportDto {
     private RefrigeratorCount refrigeratorCount;
     private RobotWork robotWork;
     private AtnWork atnWork;
+    private List<ReportHistory> reportHistories;
 
     /**
      * @BUILDER
@@ -39,6 +37,7 @@ public class UrtReportDto {
         this.robotWork = urtReportDtoBuilder.robotWork;
         this.atnWork = urtReportDtoBuilder.atnWork;
         this.brigade = urtReportDtoBuilder.brigade;
+        this.reportHistories = urtReportDtoBuilder.reportHistories;
     }
     public static class UrtReportDtoBuilder{
         private ReportDate reportDate;
@@ -49,7 +48,7 @@ public class UrtReportDto {
         private RobotWork robotWork;
         private AtnWork atnWork;
         private EmployeesCount employeesCount;
-
+        private List<ReportHistory> reportHistories = new ArrayList<>();
         /**
          *
          * @param leaders - Input List of Employee objects.
@@ -112,7 +111,11 @@ public class UrtReportDto {
             this.atnWork = atnWork;
             return this;
         }
-
+        public UrtReportDtoBuilder reportHistories(List<UrtReportHistory> urtReportHistories){
+            urtReportHistories.forEach(history ->
+                    reportHistories.add(new ReportHistory(history.getTime(),history.getInfo())));
+            return this;
+        }
         public UrtReportDto build(){
             return new UrtReportDto(this);
         }

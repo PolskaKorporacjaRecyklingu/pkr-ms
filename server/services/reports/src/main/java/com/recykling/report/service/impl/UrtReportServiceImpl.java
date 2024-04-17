@@ -70,6 +70,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
                 .employeesCount(urtReport.getEmployeesCount())
                 .atnWork(urtReport.getAtnWork())
                 .robotWork(urtReport.getRobotWork())
+                .reportHistories(urtReport.getUrtReportHistories())
                 .build();
     }
 

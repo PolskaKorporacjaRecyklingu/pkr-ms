@@ -4,12 +4,14 @@ import com.recykling.report.entity.reports.UrtReport;
 import com.recykling.report.valueObjects.ReportHistory;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 
 @Entity @NoArgsConstructor
 @Table(name = "urt_report_history")
+@Getter
 public class UrtReportHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
