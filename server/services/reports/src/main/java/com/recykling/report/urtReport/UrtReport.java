@@ -1,14 +1,14 @@
 package com.recykling.report.urtReport;
 
-import com.recykling.report.urtReport.entities.urtAggregatesWithOilFromWarehouse.AggregatesWithOilFromWarehouseWeights;
-import com.recykling.report.urtReport.entities.urtAggregatesWithOilWeights.AggregatesWithOilWeights;
-import com.recykling.report.urtReport.entities.urtAlCuRefrigerator.AlCuRefrigeratorWeights;
-import com.recykling.report.urtReport.entities.urtAluminium.AluminiumWeights;
-import com.recykling.report.urtReport.entities.urtOilFromAggregatesWeights.OilFromAggregatesWeights;
-import com.recykling.report.urtReport.entities.urtPsAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
-import com.recykling.report.urtReport.entities.urtRefrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
-import com.recykling.report.urtReport.entities.urtReportHistory.UrtReportHistory;
-import com.recykling.report.urtReport.entities.urtAggregatesWithoutOilWeights.AggregatesWithoutOilWeights;
+import com.recykling.report.urtReport.manyToOne.urtAggregatesWithOilFromWarehouse.AggregatesWithOilFromWarehouseWeights;
+import com.recykling.report.urtReport.manyToOne.urtAggregatesWithOilWeights.AggregatesWithOilWeights;
+import com.recykling.report.urtReport.manyToOne.urtAlCuRefrigerator.AlCuRefrigeratorWeights;
+import com.recykling.report.urtReport.manyToOne.urtAluminium.AluminiumWeights;
+import com.recykling.report.urtReport.manyToOne.urtOilFromAggregatesWeights.OilFromAggregatesWeights;
+import com.recykling.report.urtReport.manyToOne.urtPsAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
+import com.recykling.report.urtReport.manyToOne.urtRefrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
+import com.recykling.report.urtReport.manyToOne.urtReportHistory.UrtReportHistory;
+import com.recykling.report.urtReport.manyToOne.urtAggregatesWithoutOilWeights.AggregatesWithoutOilWeights;
 import com.recykling.report.employee.Employee;
 import com.recykling.report.exception.ResourceNotFoundException;
 import com.recykling.report.employee.repo.EmployeeRepository;
