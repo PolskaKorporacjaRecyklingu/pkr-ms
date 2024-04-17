@@ -4,6 +4,8 @@ import com.recykling.report.urtReport.entities.alCuRefrigerator.AlCuRefrigerator
 import com.recykling.report.urtReport.entities.alCuRefrigerator.repo.AlCuRefrigeratorWeightsRepository;
 import com.recykling.report.urtReport.entities.oilFromAggregatesWeights.OilFromAggregatesWeights;
 import com.recykling.report.urtReport.entities.oilFromAggregatesWeights.repo.OilFromAggregatesWeightsRepository;
+import com.recykling.report.urtReport.entities.psAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
+import com.recykling.report.urtReport.entities.psAbsRefrigeratorWeights.repo.PsAbsRefrigeratorWeightsRepository;
 import com.recykling.report.urtReport.entities.refrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
 import com.recykling.report.urtReport.entities.refrigeratorPowerCableWeights.repo.RefrigeratorPowerCableWeightsRepository;
 import com.recykling.report.urtReport.service.IUrtReportService;
@@ -18,6 +20,7 @@ import com.recykling.report.exception.ResourceNotFoundException;
 import com.recykling.report.employee.repo.EmployeeRepository;
 import com.recykling.report.urtReport.repo.UrtReportRepository;
 import com.recykling.report.valueObjects.ReportDate;
+import com.recykling.report.valueObjects.ReportHistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -37,6 +40,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
     private final AlCuRefrigeratorWeightsRepository alCuRefrigeratorWeightsRepository;
     private final RefrigeratorPowerCableWeightsRepository refrigeratorPowerCableWeightsRepository;
     private final OilFromAggregatesWeightsRepository oilFromAggregatesWeightsRepository;
+    private final PsAbsRefrigeratorWeightsRepository psAbsRefrigeratorWeightsRepository;
     /**
      * @param request - Input RequestCreateUrtReport object.
      */
@@ -56,17 +60,17 @@ public class UrtReportServiceImpl implements IUrtReportService {
 
         urtReportRepository.save(urtReport);
 
-        setupReportHistory(request,urtReport);
+        setupReportHistory(request.getReportHistories(),urtReport);
         setupAggregatesWithoutOilWeights(request.getAggregatesWithoutOilWeights(),urtReport);
         setupAlCuRefrigeratorWeights(request.getAlCuRefrigeratorWeights(),urtReport);
         setupOilFromAggregatesWeights(request.getOilFromAggregatesWeights(),urtReport);
         setupRefrigeratorPowerCableWeights(request.getRefrigeratorPowerCableWeights(),urtReport);
+        setupPsAbsRefrigeratorIncompleteWeight(request.getPsAbsRefrigeratorWeights(),urtReport);
 
     }
-    private void setupReportHistory(RequestCreateUrtReport request, UrtReport urtReport){
+    private void setupReportHistory(List<ReportHistory> histories, UrtReport urtReport){
         List<UrtReportHistory> reportHistories = new ArrayList<>();
-        request.getReportHistories()
-                .forEach(history -> reportHistories.add(new UrtReportHistory(history,urtReport)));
+        histories.forEach(history -> reportHistories.add(new UrtReportHistory(history,urtReport)));
         urtReportHistoryRepository.saveAll(reportHistories);
     }
     private void setupAggregatesWithoutOilWeights(List<Integer> weights, UrtReport urtReport){
@@ -88,6 +92,11 @@ public class UrtReportServiceImpl implements IUrtReportService {
         List<OilFromAggregatesWeights> oilFromAggregatesWeights = new ArrayList<>();
         weights.forEach(weight -> oilFromAggregatesWeights.add(new OilFromAggregatesWeights(weight,urtReport)));
         oilFromAggregatesWeightsRepository.saveAll(oilFromAggregatesWeights);
+    }
+    private void setupPsAbsRefrigeratorIncompleteWeight(List<Integer> weights, UrtReport urtReport){
+        List<PsAbsRefrigeratorWeights> psAbsRefrigeratorWeights = new ArrayList<>();
+        weights.forEach(weight -> psAbsRefrigeratorWeights.add(new PsAbsRefrigeratorWeights(weight, urtReport)));
+        psAbsRefrigeratorWeightsRepository.saveAll(psAbsRefrigeratorWeights);
     }
 
     /**
@@ -113,6 +122,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
                 .alCuRefrigeratorWeights(urtReport.getAlCuRefrigeratorWeights(), urtReport.getAlCuPackageIncompleteWeight())
                 .oilFromAggregatesWeights(urtReport.getOilFromAggregatesWeights())
                 .refrigeratorPowerCableWeights(urtReport.getRefrigeratorPowerCableWeights())
+                .psAbsRefrigeratorWeights(urtReport.getPsAbsRefrigeratorWeights(), urtReport.getPsAbsRefrigeratorIncompleteWeight())
                 .build();
     }
 
@@ -133,12 +143,18 @@ public class UrtReportServiceImpl implements IUrtReportService {
         return new UrtReportDto.UrtReportDtoBuilder()
                 .reportData(urtReport.getReportDate())
                 .leaders(urtReport.getLeaders())
+                .brigade(urtReport.getBrigade())
                 .forkliftOperators(urtReport.getForkliftOperators())
                 .refrigeratorCount(urtReport.getRefrigeratorCount())
-                .brigade(urtReport.getBrigade())
-                .robotWork(urtReport.getRobotWork())
-                .atnWork(urtReport.getAtnWork())
                 .employeesCount(urtReport.getEmployeesCount())
+                .atnWork(urtReport.getAtnWork())
+                .robotWork(urtReport.getRobotWork())
+                .reportHistories(urtReport.getUrtReportHistories())
+                .aggregatesWithoutOil(urtReport.getAggregatesWithoutOil())
+                .alCuRefrigeratorWeights(urtReport.getAlCuRefrigeratorWeights(), urtReport.getAlCuPackageIncompleteWeight())
+                .oilFromAggregatesWeights(urtReport.getOilFromAggregatesWeights())
+                .refrigeratorPowerCableWeights(urtReport.getRefrigeratorPowerCableWeights())
+                .psAbsRefrigeratorWeights(urtReport.getPsAbsRefrigeratorWeights(), urtReport.getPsAbsRefrigeratorIncompleteWeight())
                 .build();
     }
 }

@@ -56,4 +56,10 @@ public class RequestCreateUrtReport {
 
     @Valid @NotNull(message = "OilFromAggregatesWeights can not be null")
     private List<Integer> oilFromAggregatesWeights;
+
+    @Valid @NotNull(message = "PsAbsRefrigeratorWeights can not be null")
+    private List<Integer> psAbsRefrigeratorWeights;
+
+    @Valid @NotNull(message = "PsAbsRefrigeratorIncompleteWeight can not be null")
+    private Integer psAbsRefrigeratorIncompleteWeight;
 }

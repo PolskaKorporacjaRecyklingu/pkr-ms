@@ -2,6 +2,7 @@ package com.recykling.report.urtReport;
 
 import com.recykling.report.urtReport.entities.alCuRefrigerator.AlCuRefrigeratorWeights;
 import com.recykling.report.urtReport.entities.oilFromAggregatesWeights.OilFromAggregatesWeights;
+import com.recykling.report.urtReport.entities.psAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
 import com.recykling.report.urtReport.entities.refrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
 import com.recykling.report.urtReport.entities.urtReportHistory.UrtReportHistory;
 import com.recykling.report.urtReport.entities.urtAggregatesWithoutOilWeights.AggregatesWithoutOilWeights;
@@ -70,6 +71,11 @@ public class UrtReport extends ReportBase {
 
     @OneToMany(mappedBy = "urtReport")
     private List<OilFromAggregatesWeights> oilFromAggregatesWeights;
+
+    @OneToMany(mappedBy = "urtReport")
+    private List<PsAbsRefrigeratorWeights> psAbsRefrigeratorWeights;
+    private Integer psAbsRefrigeratorIncompleteWeight;
+
     /**
      *
      * @BUILDER

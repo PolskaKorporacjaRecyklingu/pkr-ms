@@ -4,6 +4,8 @@ import com.recykling.report.urtReport.entities.alCuRefrigerator.AlCuRefrigerator
 import com.recykling.report.urtReport.entities.alCuRefrigerator.dto.AlCuRefrigeratorWeightsDto;
 import com.recykling.report.urtReport.entities.oilFromAggregatesWeights.OilFromAggregatesWeights;
 import com.recykling.report.urtReport.entities.oilFromAggregatesWeights.dto.OilFromAggregatesWeightsDto;
+import com.recykling.report.urtReport.entities.psAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
+import com.recykling.report.urtReport.entities.psAbsRefrigeratorWeights.dto.PsAbsRefrigeratorWeightsDto;
 import com.recykling.report.urtReport.entities.refrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
 import com.recykling.report.urtReport.entities.refrigeratorPowerCableWeights.dto.RefrigeratorPowerCableWeightsDto;
 import com.recykling.report.urtReport.entities.urtAggregatesWithoutOilWeights.dto.AggregatesWithoutOilDto;
@@ -38,7 +40,7 @@ public class UrtReportDto {
     private AlCuRefrigeratorWeightsDto alCuRefrigeratorWeights;
     private RefrigeratorPowerCableWeightsDto refrigeratorPowerCableWeights;
     private OilFromAggregatesWeightsDto oilFromAggregatesWeights;
-
+    private PsAbsRefrigeratorWeightsDto psAbsRefrigeratorWeights;
     /**
      * @BUILDER
      */
@@ -56,6 +58,7 @@ public class UrtReportDto {
         this.alCuRefrigeratorWeights = urtReportDtoBuilder.alCuRefrigeratorWeights;
         this.refrigeratorPowerCableWeights = urtReportDtoBuilder.refrigeratorPowerCableWeights;
         this.oilFromAggregatesWeights = urtReportDtoBuilder.oilFromAggregatesWeights;
+        this.psAbsRefrigeratorWeights = urtReportDtoBuilder.psAbsRefrigeratorWeights;
     }
     public static class UrtReportDtoBuilder{
         private ReportDate reportDate;
@@ -69,12 +72,17 @@ public class UrtReportDto {
         private AggregatesWithoutOilDto aggregatesWithoutOil;
         private List<ReportHistory> reportHistories = new ArrayList<>();
         private AlCuRefrigeratorWeightsDto alCuRefrigeratorWeights;
-
         private RefrigeratorPowerCableWeightsDto refrigeratorPowerCableWeights;
         private OilFromAggregatesWeightsDto oilFromAggregatesWeights;
+        private PsAbsRefrigeratorWeightsDto psAbsRefrigeratorWeights;
 
-        public UrtReportDtoBuilder alCuRefrigeratorWeights(List<AlCuRefrigeratorWeights> weights, Integer alCuPackageIncompleteWeight){
-            this.alCuRefrigeratorWeights = new AlCuRefrigeratorWeightsDto(weights, alCuPackageIncompleteWeight);
+        public UrtReportDtoBuilder psAbsRefrigeratorWeights(List<PsAbsRefrigeratorWeights> weights, Integer incomplete){
+            this.psAbsRefrigeratorWeights = new PsAbsRefrigeratorWeightsDto(weights, incomplete);
+            return this;
+        }
+
+        public UrtReportDtoBuilder alCuRefrigeratorWeights(List<AlCuRefrigeratorWeights> weights, Integer incomplete){
+            this.alCuRefrigeratorWeights = new AlCuRefrigeratorWeightsDto(weights, incomplete);
             return this;
         }
         public UrtReportDtoBuilder refrigeratorPowerCableWeights(List<RefrigeratorPowerCableWeights> weights){
