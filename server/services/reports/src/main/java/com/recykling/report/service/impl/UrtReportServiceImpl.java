@@ -1,5 +1,7 @@
 package com.recykling.report.service.impl;
 
+import com.recykling.report.entity.UrtReportHistory;
+import com.recykling.report.repository.UrtReportHistoryRepository;
 import com.recykling.report.request.RequestCreateUrtReport;
 import com.recykling.report.dto.UrtReportDto;
 
@@ -13,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author WiniaR21
@@ -22,6 +26,7 @@ import java.time.LocalDate;
 public class UrtReportServiceImpl implements IUrtReportService {
     private final UrtReportRepository urtReportRepository;
     private final EmployeeRepository employeeRepository;
+    private final UrtReportHistoryRepository urtReportHistoryRepository;
     /**
      * @param request - Input RequestCreateUrtReport object.
      */
@@ -38,7 +43,11 @@ public class UrtReportServiceImpl implements IUrtReportService {
                 .atnWork(request.getAtnWork())
                 .build();
 
+        List<UrtReportHistory> reportHistories = new ArrayList<>();
+        request.getReportHistories().forEach(history -> reportHistories.add(new UrtReportHistory(history,urtReport)));
+
         urtReportRepository.save(urtReport);
+        urtReportHistoryRepository.saveAll(reportHistories);
     }
 
 
@@ -61,6 +70,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
                 .employeesCount(urtReport.getEmployeesCount())
                 .atnWork(urtReport.getAtnWork())
                 .robotWork(urtReport.getRobotWork())
+                .reportHistories(urtReport.getUrtReportHistories())
                 .build();
     }
 
