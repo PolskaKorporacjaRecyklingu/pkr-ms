@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "aggregates_without_oil_weights")
+@Table(name = "urt_aggregates_without_oil_weights")
 @NoArgsConstructor
 @Getter
 public class AggregatesWithoutOilWeights {

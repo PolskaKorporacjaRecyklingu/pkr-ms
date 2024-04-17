@@ -84,6 +84,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
                 .atnWork(urtReport.getAtnWork())
                 .robotWork(urtReport.getRobotWork())
                 .reportHistories(urtReport.getUrtReportHistories())
+                .aggregatesWithoutOil(urtReport.getAggregatesWithoutOil())
                 .build();
     }
 

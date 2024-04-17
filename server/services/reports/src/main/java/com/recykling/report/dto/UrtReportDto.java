@@ -2,6 +2,7 @@ package com.recykling.report.dto;
 
 import com.recykling.report.entity.UrtReportHistory;
 import com.recykling.report.entity.employee.Employee;
+import com.recykling.report.entity.reports.AggregatesWithoutOilWeights;
 import com.recykling.report.valueObjects.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,8 @@ public class UrtReportDto {
     private RobotWork robotWork;
     private AtnWork atnWork;
     private List<ReportHistory> reportHistories;
+    private AggregatesWithoutOilDto aggregatesWithoutOil;
+
 
     /**
      * @BUILDER
@@ -38,6 +41,7 @@ public class UrtReportDto {
         this.atnWork = urtReportDtoBuilder.atnWork;
         this.brigade = urtReportDtoBuilder.brigade;
         this.reportHistories = urtReportDtoBuilder.reportHistories;
+        this.aggregatesWithoutOil = urtReportDtoBuilder.aggregatesWithoutOil;
     }
     public static class UrtReportDtoBuilder{
         private ReportDate reportDate;
@@ -48,6 +52,7 @@ public class UrtReportDto {
         private RobotWork robotWork;
         private AtnWork atnWork;
         private EmployeesCount employeesCount;
+        private AggregatesWithoutOilDto aggregatesWithoutOil;
         private List<ReportHistory> reportHistories = new ArrayList<>();
 
         /**
@@ -115,6 +120,10 @@ public class UrtReportDto {
         public UrtReportDtoBuilder reportHistories(List<UrtReportHistory> urtReportHistories){
             urtReportHistories.forEach(history ->
                     reportHistories.add(new ReportHistory(history.getTime(),history.getInfo())));
+            return this;
+        }
+        public UrtReportDtoBuilder aggregatesWithoutOil(List<AggregatesWithoutOilWeights> aggregatesWithoutOilWeights){
+            this.aggregatesWithoutOil = new AggregatesWithoutOilDto(aggregatesWithoutOilWeights);
             return this;
         }
         public UrtReportDto build(){
