@@ -1,6 +1,6 @@
 package com.recykling.report.exception;
 
-import com.recykling.report.dto.ErrorResponseDto;
+import com.recykling.report.exception.dto.ErrorResponseDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
