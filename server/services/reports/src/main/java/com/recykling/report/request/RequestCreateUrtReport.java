@@ -39,4 +39,7 @@ public class RequestCreateUrtReport {
 
     @Valid @NotNull(message = "Report history cannot be null")
     private List<ReportHistory> reportHistories;
+
+    @Valid @NotNull(message = "AggregatesWithoutOilWeights can not be null")
+    private List<Weight> aggregatesWithoutOilWeights;
 }

@@ -1,6 +1,8 @@
 package com.recykling.report.service.impl;
 
 import com.recykling.report.entity.UrtReportHistory;
+import com.recykling.report.entity.reports.AggregatesWithoutOilWeights;
+import com.recykling.report.repository.AggregatesWithoutOilWeightsRepository;
 import com.recykling.report.repository.UrtReportHistoryRepository;
 import com.recykling.report.request.RequestCreateUrtReport;
 import com.recykling.report.dto.UrtReportDto;
@@ -27,6 +29,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
     private final UrtReportRepository urtReportRepository;
     private final EmployeeRepository employeeRepository;
     private final UrtReportHistoryRepository urtReportHistoryRepository;
+    private final AggregatesWithoutOilWeightsRepository aggregatesWIthoutOilWeightsRepository;
     /**
      * @param request - Input RequestCreateUrtReport object.
      */
@@ -43,14 +46,24 @@ public class UrtReportServiceImpl implements IUrtReportService {
                 .atnWork(request.getAtnWork())
                 .build();
 
-        List<UrtReportHistory> reportHistories = new ArrayList<>();
-        request.getReportHistories().forEach(history -> reportHistories.add(new UrtReportHistory(history,urtReport)));
-
         urtReportRepository.save(urtReport);
+
+        setupReportHistory(request,urtReport);
+        setupAggregatesWithoutOilWeights(request,urtReport);
+
+    }
+    private void setupReportHistory(RequestCreateUrtReport request, UrtReport urtReport){
+        List<UrtReportHistory> reportHistories = new ArrayList<>();
+        request.getReportHistories()
+                .forEach(history -> reportHistories.add(new UrtReportHistory(history,urtReport)));
         urtReportHistoryRepository.saveAll(reportHistories);
     }
-
-
+    private void setupAggregatesWithoutOilWeights(RequestCreateUrtReport request, UrtReport urtReport){
+        List<AggregatesWithoutOilWeights> aggregatesWithoutOilWeights = new ArrayList<>();
+        request.getAggregatesWithoutOilWeights()
+                .forEach(weight -> aggregatesWithoutOilWeights.add(new AggregatesWithoutOilWeights(weight, urtReport)));
+        aggregatesWIthoutOilWeightsRepository.saveAll(aggregatesWithoutOilWeights);
+    }
 
     /**
      * @param urtReportId - Input UrtReport's id.

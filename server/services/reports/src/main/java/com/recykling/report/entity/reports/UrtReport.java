@@ -53,6 +53,10 @@ public class UrtReport extends ReportBase {
 
     @OneToMany(mappedBy = "urtReport")
     private List<UrtReportHistory> urtReportHistories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "urtReport")
+    private List<AggregatesWithoutOilWeights> aggregatesWithoutOil;
+
     /**
      *
      * @BUILDER
@@ -65,7 +69,6 @@ public class UrtReport extends ReportBase {
         this.refrigeratorCount = reportBuilder.refrigeratorCount;
         this.robotWork = reportBuilder.robotWork;
         this.atnWork = reportBuilder.atnWork;
-        this.urtReportHistories = reportBuilder.urtReportHistories;
 
         this.setEmployeesCount(new EmployeesCount(brigade.size()));
     }
@@ -78,10 +81,8 @@ public class UrtReport extends ReportBase {
         private List<Employee> brigade = new ArrayList<>();
         private List<Employee> leaders = new ArrayList<>();
         private List<Employee> forkliftOperators = new ArrayList<>();
-        private List<UrtReportHistory> urtReportHistories = new ArrayList<>();
 
         private final EmployeeRepository employeeRepository;
-
         public ReportBuilder reportData(ReportDate reportDate){
             this.reportDate = reportDate;
             return this;
