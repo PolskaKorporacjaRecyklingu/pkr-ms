@@ -1,6 +1,7 @@
 package com.recykling.report.entity;
 
 import com.recykling.report.entity.reports.UrtReport;
+import com.recykling.report.valueObjects.ReportHistory;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,10 @@ public class UrtReportHistory {
     @ManyToOne
     @JoinColumn(name="urt_report_id", nullable = false)
     private UrtReport urtReport;
+
+    public UrtReportHistory(ReportHistory reportHistory, UrtReport urtReport) {
+        this.time = reportHistory.time();
+        this.info = reportHistory.info();
+        this.urtReport = urtReport;
+    }
 }

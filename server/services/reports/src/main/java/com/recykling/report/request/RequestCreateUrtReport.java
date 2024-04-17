@@ -1,10 +1,7 @@
 package com.recykling.report.request;
 
 
-import com.recykling.report.valueObjects.AtnWork;
-import com.recykling.report.valueObjects.RefrigeratorCount;
-import com.recykling.report.valueObjects.ReportDate;
-import com.recykling.report.valueObjects.RobotWork;
+import com.recykling.report.valueObjects.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -40,5 +37,6 @@ public class RequestCreateUrtReport {
     @Valid @NotNull(message = "AtnWork can not be null")
     private AtnWork atnWork;
 
-
+    @Valid @NotNull(message = "Report history cannot be null")
+    private List<ReportHistory> reportHistories;
 }
