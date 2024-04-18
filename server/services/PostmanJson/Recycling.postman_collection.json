@@ -1,0 +1,203 @@
+{
+	"info": {
+		"_postman_id": "1d8aff7a-6659-49d0-99c7-eac95ef8997d",
+		"name": "Recycling",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33295894"
+	},
+	"item": [
+		{
+			"name": "reports",
+			"item": [
+				{
+					"name": "createReport",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"reportDate\": {\r\n    \"date\": \"2022-12-05\",\r\n    \"shift\": 2\r\n  },\r\n  \"forkliftOperatorsId\": [\r\n        1\r\n    ],\r\n  \"leadersId\": [\r\n        2\r\n    ],\r\n\r\n  \"brigadeEmployeesId\": [\r\n    3, \r\n    4, \r\n    5\r\n  ],\r\n  \"refrigeratorCount\": {\r\n    \"rejectedRefrigerators\": 20,\r\n    \"reworkedRefrigerators\": 400\r\n  },\r\n  \"robotWork\": {\r\n    \"workWithRobot\": false,\r\n    \"workWithRobotHours\": 4\r\n  },\r\n  \"atnWork\": {\r\n    \"workWithAtn\": true,\r\n    \"workWithAtnHours\": 4\r\n  },\r\n  \"reportHistories\":[\r\n    {\r\n        \"time\": \"20:00\",\r\n        \"info\": \"Pożar\"\r\n    }\r\n  ],\r\n  \"aggregatesWithoutOilWeights\":[\r\n   10,10\r\n  ],\r\n  \"alCuRefrigeratorWeights\":[\r\n   20,20\r\n  ],\r\n  \"alCuPackageIncompleteWeight\": 200,\r\n  \"refrigeratorPowerCableWeights\":[\r\n   30,30\r\n  ],\r\n   \"oilFromAggregatesWeights\":[\r\n   40,40\r\n  ],\r\n   \"psAbsRefrigeratorWeights\":[\r\n   50,50\r\n  ],\r\n  \"psAbsRefrigeratorIncompleteWeight\": 500,\r\n  \"aluminiumWeights\":[\r\n   60,60\r\n  ],\r\n  \"aggregatesWithOilFromWarehouseWeights\":[\r\n   50,60\r\n  ],\r\n  \"aggregatesWithOilWeights\":[\r\n   50,60\r\n  ]\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/reports/v1/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"reports",
+								"v1",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchReportById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/reports/v1/fetch?urtReportId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"reports",
+								"v1",
+								"fetch"
+							],
+							"query": [
+								{
+									"key": "urtReportId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchByReportData",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/reports/v1/fetch-by-data?date=2022-12-05&shift=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"reports",
+								"v1",
+								"fetch-by-data"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2022-12-05"
+								},
+								{
+									"key": "shift",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "employees",
+			"item": [
+				{
+					"name": "createEmployee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\":{\r\n        \"firstName\": \"{{$randomFirstName}}\",\r\n        \"lastName\": \"{{$randomLastName}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/employee/v1/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"employee",
+								"v1",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchEmployeeById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "personalIdentityNumber",
+								"value": "12456478801",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9000/employee/v1/fetch?employeeId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"employee",
+								"v1",
+								"fetch"
+							],
+							"query": [
+								{
+									"key": "employeeId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchEmployeeByFullName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/employee/v1/fetch-by-fullName?firstName=Daniel&lastName=Winiarczyk",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"employee",
+								"v1",
+								"fetch-by-fullName"
+							],
+							"query": [
+								{
+									"key": "firstName",
+									"value": "Daniel"
+								},
+								{
+									"key": "lastName",
+									"value": "Winiarczyk"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
