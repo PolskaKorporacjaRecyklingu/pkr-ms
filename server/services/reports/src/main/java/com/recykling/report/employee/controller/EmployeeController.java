@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,7 @@ import java.util.List;
 public class EmployeeController {
     private final IEmployeeService iEmployeeService;
 
+    @Secured({"MANAGER", "ADMIN"})
     @PostMapping(path = "/create")
     public ResponseEntity<ResponseDto> createEmployee(
             @RequestBody @Valid RequestCreateEmployee request
@@ -36,7 +39,7 @@ public class EmployeeController {
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto("201","Employee created successfully"));
     }
-
+    @Secured({"URT_LEADER","MANAGER", "ADMIN"})
     @GetMapping(path = "/fetch")
     public ResponseEntity<EmployeeDto> fetchEmployeeById(
             @RequestParam Long employeeId
@@ -47,7 +50,7 @@ public class EmployeeController {
                 .status(HttpStatus.OK)
                 .body(employeeDto);
     }
-
+    @Secured({"URT_LEADER","MANAGER", "ADMIN"})
     @GetMapping(path = "/fetch-by-fullName")
     public ResponseEntity<List<EmployeeDto>> fetchEmployeeByFullName(
             @RequestParam String firstName,
@@ -59,7 +62,7 @@ public class EmployeeController {
                 .status(HttpStatus.OK)
                 .body(employeesDto);
     }
-
+    @Secured({"MANAGER", "ADMIN"})
     @PutMapping(path = "/update")
     public ResponseEntity<ResponseDto> updateEmployee(@RequestBody RequestUpdateEmployee request){
         iEmployeeService.updateEmployee(request);

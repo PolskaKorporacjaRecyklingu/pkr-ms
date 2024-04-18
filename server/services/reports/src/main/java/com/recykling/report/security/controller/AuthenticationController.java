@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
         private final IAuthenticationService iAuthenticationService;
 
-
+        @Secured({"MANAGER", "ADMIN"})
         @PostMapping(path = "/register")
         public ResponseEntity<ResponseDto> register(
                 @Valid @NotNull @RequestBody RegisterRequest request
