@@ -84,7 +84,7 @@
 				<version>3.4.1</version>
 				<configuration>
 					<to>
-						<image>danielwiniarczyk/${project.artifactId}:v1</image>
+						<image>danielwiniarczyk/${project.artifactId}:v1.5</image>
 					</to>
 				</configuration>
 			</plugin>
