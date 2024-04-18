@@ -1,6 +1,7 @@
 package com.recykling.report.exception;
 
 import com.recykling.report.exception.dto.ErrorResponseDto;
+import com.recykling.report.exception.dto.UniqueUsernameException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -69,6 +70,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 LocalDateTime.now()
         );
         return new ResponseEntity<>(errorResponseDTO, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(UniqueUsernameException.class)
+    public ResponseEntity<ErrorResponseDto> handleUniqueUsernameException(
+            UniqueUsernameException exception,
+            WebRequest webRequest
+    )
+    {
+        ErrorResponseDto errorResponseDTO = new ErrorResponseDto(
+                webRequest.getDescription(false),
+                HttpStatus.CONFLICT,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponseDTO, HttpStatus.CONFLICT);
     }
 
 }

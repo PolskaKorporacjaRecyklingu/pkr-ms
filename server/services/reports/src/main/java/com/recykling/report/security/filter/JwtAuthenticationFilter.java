@@ -1,6 +1,6 @@
 package com.recykling.report.security.filter;
 
-import com.recykling.report.security.service.JwtService;
+import com.recykling.report.security.service.IJwtService;
 import com.recykling.report.security.user.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,58 +16,40 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final JwtService jwtService;
+    private final IJwtService jwtService;
     private final UserDetailsServiceImpl userDetailsService;
+
     @Override
-    protected void doFilterInternal
-            (
-                   @NonNull HttpServletRequest request,
-                   @NonNull HttpServletResponse response,
-                   @NonNull FilterChain filterChain
-            )
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain)
             throws ServletException, IOException
     {
-        String authHeader = getAuthHeader.apply(request);
+        String authHeader = request.getHeader("Authorization");
 
-        if(headerIsInvalid.apply(authHeader)) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        String token = getToken.apply(authHeader);
+        String token = authHeader.substring(7);
         String username = jwtService.extractUsername(token);
 
-        if(userIsUnauthorized.apply(username)){
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            if(jwtService.isValid(token, userDetails)){
+            if (jwtService.isValid(token, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );
-                authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
-
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
         filterChain.doFilter(request, response);
     }
-
-    private final Function<String, Boolean>
-            headerIsInvalid = authHeader ->
-            authHeader == null || !authHeader.startsWith("Bearer ");
-    private final Function<HttpServletRequest, String>
-            getAuthHeader = request ->
-            request.getHeader("Authorization");
-    private final Function<String, String>
-            getToken = authHeader ->
-            authHeader.substring(7);
-    private final Function<String, Boolean>
-            userIsUnauthorized = username ->
-            username != null && SecurityContextHolder.getContext().getAuthentication() == null;
 }
