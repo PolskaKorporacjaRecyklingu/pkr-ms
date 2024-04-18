@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data @NoArgsConstructor
-public class AggregatesWithOilDto {
+public class AggregatesWithOilWeightsDto {
     private List<Integer> aggregatesWithOilWeights = new ArrayList<>();
     private Integer count;
     private Integer sumWeight;
 
-    public AggregatesWithOilDto(List<AggregatesWithOilWeights> weights) {
+    public AggregatesWithOilWeightsDto(List<AggregatesWithOilWeights> weights) {
         weights
                .forEach(weight ->
                        aggregatesWithOilWeights.add(weight.getWeight()));

@@ -1,7 +1,13 @@
 package com.recykling.report.urtReport.dto;
 
+import com.recykling.report.urtReport.manyToOne.urtAggregatesWithOilFromWarehouse.AggregatesWithOilFromWarehouseWeights;
+import com.recykling.report.urtReport.manyToOne.urtAggregatesWithOilFromWarehouse.dto.AggregatesWithOilFromWarehouseWeightsDto;
+import com.recykling.report.urtReport.manyToOne.urtAggregatesWithOilWeights.AggregatesWithOilWeights;
+import com.recykling.report.urtReport.manyToOne.urtAggregatesWithOilWeights.dto.AggregatesWithOilWeightsDto;
 import com.recykling.report.urtReport.manyToOne.urtAlCuRefrigerator.AlCuRefrigeratorWeights;
 import com.recykling.report.urtReport.manyToOne.urtAlCuRefrigerator.dto.AlCuRefrigeratorWeightsDto;
+import com.recykling.report.urtReport.manyToOne.urtAluminium.AluminiumWeights;
+import com.recykling.report.urtReport.manyToOne.urtAluminium.dto.AluminiumWeightsDto;
 import com.recykling.report.urtReport.manyToOne.urtOilFromAggregatesWeights.OilFromAggregatesWeights;
 import com.recykling.report.urtReport.manyToOne.urtOilFromAggregatesWeights.dto.OilFromAggregatesWeightsDto;
 import com.recykling.report.urtReport.manyToOne.urtPsAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
@@ -21,7 +27,7 @@ import java.util.List;
 
 /**
  * @author WiniaR21
- * @apiNote This dto object is response, validation do not needed
+ * @NOTE - This dto object is response, validation do not needed
  */
 @Data
 @NoArgsConstructor
@@ -36,11 +42,14 @@ public class UrtReportDto {
     private RobotWork robotWork;
     private AtnWork atnWork;
     private List<ReportHistory> reportHistories;
-    private AggregatesWithoutOilDto aggregatesWithoutOil;
+    private AggregatesWithoutOilDto aggregatesWithoutOilWeights;
     private AlCuRefrigeratorWeightsDto alCuRefrigeratorWeights;
     private RefrigeratorPowerCableWeightsDto refrigeratorPowerCableWeights;
     private OilFromAggregatesWeightsDto oilFromAggregatesWeights;
     private PsAbsRefrigeratorWeightsDto psAbsRefrigeratorWeights;
+    private AggregatesWithOilWeightsDto aggregatesWithOilWeights;
+    private AluminiumWeightsDto aluminiumWeights;
+    private AggregatesWithOilFromWarehouseWeightsDto aggregatesWithOilFromWarehouseWeights;
     /**
      * @BUILDER
      */
@@ -54,11 +63,14 @@ public class UrtReportDto {
         this.atnWork = urtReportDtoBuilder.atnWork;
         this.brigade = urtReportDtoBuilder.brigade;
         this.reportHistories = urtReportDtoBuilder.reportHistories;
-        this.aggregatesWithoutOil = urtReportDtoBuilder.aggregatesWithoutOil;
+        this.aggregatesWithoutOilWeights = urtReportDtoBuilder.aggregatesWithoutOilWeights;
         this.alCuRefrigeratorWeights = urtReportDtoBuilder.alCuRefrigeratorWeights;
         this.refrigeratorPowerCableWeights = urtReportDtoBuilder.refrigeratorPowerCableWeights;
         this.oilFromAggregatesWeights = urtReportDtoBuilder.oilFromAggregatesWeights;
         this.psAbsRefrigeratorWeights = urtReportDtoBuilder.psAbsRefrigeratorWeights;
+        this.aggregatesWithOilWeights = urtReportDtoBuilder.aggregatesWithOilWeights;
+        this.aluminiumWeights = urtReportDtoBuilder.aluminiumWeights;
+        this.aggregatesWithOilFromWarehouseWeights = urtReportDtoBuilder.aggregatesWithOilFromWarehouseWeights;
     }
     public static class UrtReportDtoBuilder{
         private ReportDate reportDate;
@@ -69,18 +81,33 @@ public class UrtReportDto {
         private RobotWork robotWork;
         private AtnWork atnWork;
         private Integer employeesCount;
-        private AggregatesWithoutOilDto aggregatesWithoutOil;
+        private AggregatesWithoutOilDto aggregatesWithoutOilWeights;
         private List<ReportHistory> reportHistories = new ArrayList<>();
         private AlCuRefrigeratorWeightsDto alCuRefrigeratorWeights;
         private RefrigeratorPowerCableWeightsDto refrigeratorPowerCableWeights;
         private OilFromAggregatesWeightsDto oilFromAggregatesWeights;
         private PsAbsRefrigeratorWeightsDto psAbsRefrigeratorWeights;
+        private AggregatesWithOilWeightsDto aggregatesWithOilWeights;
+        private AluminiumWeightsDto aluminiumWeights;
+        private AggregatesWithOilFromWarehouseWeightsDto aggregatesWithOilFromWarehouseWeights;
 
+
+        public UrtReportDtoBuilder aggregatesWithOilWeights(List<AggregatesWithOilWeights> weights){
+            this.aggregatesWithOilWeights = new AggregatesWithOilWeightsDto(weights);
+            return this;
+        }
+        public UrtReportDtoBuilder aluminiumWeights(List<AluminiumWeights> weights){
+            this.aluminiumWeights = new AluminiumWeightsDto(weights);
+            return this;
+        }
+        public UrtReportDtoBuilder aggregatesWithOilFromWarehouseWeights(List<AggregatesWithOilFromWarehouseWeights> weights){
+            this.aggregatesWithOilFromWarehouseWeights = new AggregatesWithOilFromWarehouseWeightsDto(weights);
+            return this;
+        }
         public UrtReportDtoBuilder psAbsRefrigeratorWeights(List<PsAbsRefrigeratorWeights> weights, Integer incomplete){
             this.psAbsRefrigeratorWeights = new PsAbsRefrigeratorWeightsDto(weights, incomplete);
             return this;
         }
-
         public UrtReportDtoBuilder alCuRefrigeratorWeights(List<AlCuRefrigeratorWeights> weights, Integer incomplete){
             this.alCuRefrigeratorWeights = new AlCuRefrigeratorWeightsDto(weights, incomplete);
             return this;
@@ -160,8 +187,8 @@ public class UrtReportDto {
                     reportHistories.add(new ReportHistory(history.getTime(),history.getInfo())));
             return this;
         }
-        public UrtReportDtoBuilder aggregatesWithoutOil(List<AggregatesWithoutOilWeights> weights){
-            this.aggregatesWithoutOil = new AggregatesWithoutOilDto(weights);
+        public UrtReportDtoBuilder aggregatesWithoutOilWeights(List<AggregatesWithoutOilWeights> weights){
+            this.aggregatesWithoutOilWeights = new AggregatesWithoutOilDto(weights);
             return this;
         }
         public UrtReportDto build(){

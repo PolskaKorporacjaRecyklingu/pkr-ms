@@ -42,7 +42,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public EmployeeDto fetchEmployeeById(Long employeeId) {
-        Employee employee = employeeRepository.findById(employeeId).orElseThrow(
+        Employee employee
+                = employeeRepository.findById(employeeId)
+                .orElseThrow(
                 () -> new ResourceNotFoundException("Employee", "employeeId", employeeId.toString())
         );
 

@@ -28,7 +28,6 @@ import java.util.Optional;
 @NoArgsConstructor
 @Table(name = "urt_reports")
 public class UrtReport extends ReportBase {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "urt_report_id")
@@ -59,35 +58,62 @@ public class UrtReport extends ReportBase {
     private RobotWork robotWork;
     private AtnWork atnWork;
 
-    @OneToMany(mappedBy = "urtReport")
+    @OneToMany(mappedBy = "urtReport", cascade = CascadeType.ALL)
     private List<UrtReportHistory> urtReportHistories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "urtReport")
-    private List<AggregatesWithoutOilWeights> aggregatesWithoutOil;
+    @OneToMany(mappedBy = "urtReport", cascade = CascadeType.ALL)
+    private List<AggregatesWithoutOilWeights> aggregatesWithoutOilWeights = new ArrayList<>();
 
-    @OneToMany(mappedBy = "urtReport")
-    private List<AlCuRefrigeratorWeights> alCuRefrigeratorWeights;
+    @OneToMany(mappedBy = "urtReport", cascade = CascadeType.ALL)
+    private List<AlCuRefrigeratorWeights> alCuRefrigeratorWeights = new ArrayList<>();
     private Integer alCuPackageIncompleteWeight;
 
-    @OneToMany(mappedBy = "urtReport")
-    private List<RefrigeratorPowerCableWeights> refrigeratorPowerCableWeights;
+    @OneToMany(mappedBy = "urtReport", cascade = CascadeType.ALL)
+    private List<RefrigeratorPowerCableWeights> refrigeratorPowerCableWeights = new ArrayList<>();
 
-    @OneToMany(mappedBy = "urtReport")
-    private List<OilFromAggregatesWeights> oilFromAggregatesWeights;
+    @OneToMany(mappedBy = "urtReport", cascade = CascadeType.ALL)
+    private List<OilFromAggregatesWeights> oilFromAggregatesWeights = new ArrayList<>();
 
-    @OneToMany(mappedBy = "urtReport")
-    private List<PsAbsRefrigeratorWeights> psAbsRefrigeratorWeights;
+    @OneToMany(mappedBy = "urtReport", cascade = CascadeType.ALL)
+    private List<PsAbsRefrigeratorWeights> psAbsRefrigeratorWeights = new ArrayList<>();
     private Integer psAbsRefrigeratorIncompleteWeight;
 
-    @OneToMany(mappedBy = "urtReport")
-    private List<AggregatesWithOilWeights> aggregatesWithOilWeights;
+    @OneToMany(mappedBy = "urtReport", cascade = CascadeType.ALL)
+    private List<AggregatesWithOilWeights> aggregatesWithOilWeights = new ArrayList<>();
 
-    @OneToMany(mappedBy = "urtReport")
-    private List<AluminiumWeights> aluminiumWeights;
+    @OneToMany(mappedBy = "urtReport", cascade = CascadeType.ALL)
+    private List<AluminiumWeights> aluminiumWeights = new ArrayList<>();
 
-    @OneToMany(mappedBy = "urtReport")
-    private List<AggregatesWithOilFromWarehouseWeights> aggregatesWithOilFromWarehouseWeights;
+    @OneToMany(mappedBy = "urtReport", cascade = CascadeType.ALL)
+    private List<AggregatesWithOilFromWarehouseWeights> aggregatesWithOilFromWarehouseWeights = new ArrayList<>();
 
+    public void setupUrtReportHistories(List<ReportHistory> history){
+        history.forEach(h -> urtReportHistories.add(new UrtReportHistory(h, this)));
+    }
+    public void setupAggregatesWithoutOilWeights(List<Integer> weights){
+        weights.forEach(w -> aggregatesWithoutOilWeights.add(new AggregatesWithoutOilWeights(w, this)));
+    }
+    public void setupAlCuRefrigeratorWeights(List<Integer> weights){
+        weights.forEach(w -> alCuRefrigeratorWeights.add(new AlCuRefrigeratorWeights(w, this)));
+    }
+    public void setupRefrigeratorPowerCableWeights(List<Integer> weights){
+        weights.forEach(w -> refrigeratorPowerCableWeights.add(new RefrigeratorPowerCableWeights(w, this)));
+    }
+    public void setupOilFromAggregatesWeights(List<Integer> weights){
+        weights.forEach(w -> oilFromAggregatesWeights.add(new OilFromAggregatesWeights(w, this)));
+    }
+    public void setupPsAbsRefrigeratorWeights(List<Integer> weights){
+        weights.forEach(w -> psAbsRefrigeratorWeights.add(new PsAbsRefrigeratorWeights(w, this)));
+    }
+    public void setupAggregatesWithOilWeights(List<Integer> weights){
+        weights.forEach(w -> aggregatesWithOilWeights.add(new AggregatesWithOilWeights(w, this)));
+    }
+    public void setupAluminiumWeights(List<Integer> weights){
+        weights.forEach(w -> aluminiumWeights.add(new AluminiumWeights(w, this)));
+    }
+    public void setupAggregatesWithOilFromWarehouseWeights(List<Integer> weights){
+        weights.forEach(w -> aggregatesWithOilFromWarehouseWeights.add(new AggregatesWithOilFromWarehouseWeights(w, this)));
+    }
     /**
      *
      * @BUILDER
@@ -101,6 +127,7 @@ public class UrtReport extends ReportBase {
         this.robotWork = reportBuilder.robotWork;
         this.atnWork = reportBuilder.atnWork;
         this.alCuPackageIncompleteWeight = reportBuilder.alCuPackageIncompleteWeight;
+        this.psAbsRefrigeratorIncompleteWeight = reportBuilder.psAbsRefrigeratorIncompleteWeight;
 
         this.setEmployeesCount(new EmployeesCount(brigade.size()));
     }
@@ -114,8 +141,14 @@ public class UrtReport extends ReportBase {
         private List<Employee> leaders = new ArrayList<>();
         private Integer alCuPackageIncompleteWeight;
         private List<Employee> forkliftOperators = new ArrayList<>();
+        //  TODO tutaj był null
+        private Integer psAbsRefrigeratorIncompleteWeight;
 
         private final EmployeeRepository employeeRepository;
+        public ReportBuilder psAbsRefrigeratorIncompleteWeight(Integer psAbsRefrigeratorIncompleteWeight){
+            this.psAbsRefrigeratorIncompleteWeight = psAbsRefrigeratorIncompleteWeight;
+            return this;
+        }
         public ReportBuilder reportData(ReportDate reportDate){
             this.reportDate = reportDate;
             return this;
