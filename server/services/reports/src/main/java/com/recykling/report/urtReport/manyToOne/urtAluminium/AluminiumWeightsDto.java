@@ -1,4 +1,4 @@
-package com.recykling.report.urtReport.manyToOne.urtAluminium.dto;
+package com.recykling.report.urtReport.manyToOne.urtAluminium;
 
 import com.recykling.report.urtReport.manyToOne.urtAluminium.AluminiumWeights;
 import com.recykling.report.urtReport.manyToOne.urtOilFromAggregatesWeights.OilFromAggregatesWeights;

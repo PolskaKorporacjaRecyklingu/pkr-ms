@@ -1,4 +1,4 @@
-package com.recykling.report.urtReport.manyToOne.urtRefrigeratorPowerCableWeights.dto;
+package com.recykling.report.urtReport.manyToOne.urtRefrigeratorPowerCableWeights;
 
 import com.recykling.report.urtReport.manyToOne.urtRefrigeratorPowerCableWeights.RefrigeratorPowerCableWeights;
 import lombok.Data;

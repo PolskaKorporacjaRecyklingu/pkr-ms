@@ -1,4 +1,4 @@
-package com.recykling.report.urtReport.manyToOne.urtAlCuRefrigerator.dto;
+package com.recykling.report.urtReport.manyToOne.urtAlCuRefrigerator;
 
 import com.recykling.report.urtReport.manyToOne.urtAlCuRefrigerator.AlCuRefrigeratorWeights;
 import lombok.Data;

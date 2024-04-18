@@ -1,4 +1,4 @@
-package com.recykling.report.urtReport.manyToOne.urtAggregatesWithOilWeights.dto;
+package com.recykling.report.urtReport.manyToOne.urtAggregatesWithOilWeights;
 
 import com.recykling.report.urtReport.manyToOne.urtAggregatesWithOilWeights.AggregatesWithOilWeights;
 import lombok.Data;

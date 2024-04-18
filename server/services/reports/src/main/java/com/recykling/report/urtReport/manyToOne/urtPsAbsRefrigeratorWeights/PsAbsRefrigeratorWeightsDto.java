@@ -1,4 +1,4 @@
-package com.recykling.report.urtReport.manyToOne.urtPsAbsRefrigeratorWeights.dto;
+package com.recykling.report.urtReport.manyToOne.urtPsAbsRefrigeratorWeights;
 
 import com.recykling.report.urtReport.manyToOne.urtPsAbsRefrigeratorWeights.PsAbsRefrigeratorWeights;
 import lombok.Data;
