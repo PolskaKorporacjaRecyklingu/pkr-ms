@@ -1,7 +1,7 @@
 package com.recykling.report.security.service.impl;
 
 import com.recykling.report.exception.ResourceNotFoundException;
-import com.recykling.report.exception.dto.UniqueUsernameException;
+import com.recykling.report.exception.UniqueUsernameException;
 import com.recykling.report.security.controller.request.LoginRequest;
 import com.recykling.report.security.controller.request.RegisterRequest;
 import com.recykling.report.security.controller.response.AuthenticationResponse;
