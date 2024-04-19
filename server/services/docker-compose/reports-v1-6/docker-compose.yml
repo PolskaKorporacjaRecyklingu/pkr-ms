@@ -1,0 +1,68 @@
+services:
+  configserver:
+    image: "danielwiniarczyk/configserver:v1.6"
+    container_name: config-server-ms
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+    deploy:
+      resources:
+        limits:
+          memory: 600m
+    networks:
+      - polska-korporacja-recyklingu-network
+
+  postgres-database: #
+    image: postgres:latest
+    restart: always
+    container_name: postgres-db
+    ports:
+      - "5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-d", "reportsdb", "-U", "reportsdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    environment:
+        - POSTGRES_DB=reportsdb
+        - POSTGRES_USER=reportsdb
+        - PGUSER=reportsdb
+        - POSTGRES_PASSWORD=reportsdb
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - polska-korporacja-recyklingu-network
+
+  reports:
+    image: "danielwiniarczyk/reports:v1.6"
+    container_name: reports-ms
+    ports:
+      - "9000:9000"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    depends_on:
+      configserver:
+        condition: service_healthy
+      postgres-database:
+        condition: service_healthy
+    networks:
+      - polska-korporacja-recyklingu-network
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8080/
+      SPRING_APPLICATION_NAME: "reports"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-database:5432/reportsdb"
+
+networks:
+  polska-korporacja-recyklingu-network:
+    driver: "bridge"
+
+volumes:
+  db-data:

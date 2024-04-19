@@ -1,0 +1,519 @@
+{
+	"info": {
+		"_postman_id": "1d8aff7a-6659-49d0-99c7-eac95ef8997d",
+		"name": "Recycling",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33295894"
+	},
+	"item": [
+		{
+			"name": "reports",
+			"item": [
+				{
+					"name": "createReport (Requires URT_LEADER)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"reportDate\": {\r\n    \"date\": \"2022-12-05\",\r\n    \"shift\": 2\r\n  },\r\n  \"forkliftOperatorsId\": [\r\n        1\r\n    ],\r\n  \"leadersId\": [\r\n        2\r\n    ],\r\n\r\n  \"brigadeEmployeesId\": [\r\n    3, \r\n    4, \r\n    5\r\n  ],\r\n  \"refrigeratorCount\": {\r\n    \"rejectedRefrigerators\": 20,\r\n    \"reworkedRefrigerators\": 400\r\n  },\r\n  \"robotWork\": {\r\n    \"workWithRobot\": false,\r\n    \"workWithRobotHours\": 4\r\n  },\r\n  \"atnWork\": {\r\n    \"workWithAtn\": true,\r\n    \"workWithAtnHours\": 4\r\n  },\r\n  \"reportHistories\":[\r\n    {\r\n        \"time\": \"20:00\",\r\n        \"info\": \"Pożar\"\r\n    }\r\n  ],\r\n  \"aggregatesWithoutOilWeights\":[\r\n   10,10\r\n  ],\r\n  \"alCuRefrigeratorWeights\":[\r\n   20,20\r\n  ],\r\n  \"alCuPackageIncompleteWeight\": 200,\r\n  \"refrigeratorPowerCableWeights\":[\r\n   30,30\r\n  ],\r\n   \"oilFromAggregatesWeights\":[\r\n   40,40\r\n  ],\r\n   \"psAbsRefrigeratorWeights\":[\r\n   50,50\r\n  ],\r\n  \"psAbsRefrigeratorIncompleteWeight\": 500,\r\n  \"aluminiumWeights\":[\r\n   60,60\r\n  ],\r\n  \"aggregatesWithOilFromWarehouseWeights\":[\r\n   50,60\r\n  ],\r\n  \"aggregatesWithOilWeights\":[\r\n   50,60\r\n  ]\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/reports/v1/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"reports",
+								"v1",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchReportById (Requires URT_LEADER)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/reports/v1/fetch?urtReportId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"reports",
+								"v1",
+								"fetch"
+							],
+							"query": [
+								{
+									"key": "urtReportId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchByReportData (Requires URT_LEADER)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/reports/v1/fetch-by-data?date=2022-12-05&shift=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"reports",
+								"v1",
+								"fetch-by-data"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2022-12-05"
+								},
+								{
+									"key": "shift",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateReport (Requires URT_LEADER)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"reportDate\": {\r\n    \"date\": \"2022-12-06\",\r\n    \"shift\": 1\r\n  },\r\n  \"forkliftOperatorsId\": [\r\n        1\r\n    ],\r\n  \"leadersId\": [\r\n        2\r\n    ],\r\n\r\n  \"brigadeEmployeesId\": [\r\n    3, \r\n    4, \r\n    5\r\n  ],\r\n  \"refrigeratorCount\": {\r\n    \"rejectedRefrigerators\": 20,\r\n    \"reworkedRefrigerators\": 500\r\n  },\r\n  \"robotWork\": {\r\n    \"workWithRobot\": false,\r\n    \"workWithRobotHours\": 4\r\n  },\r\n  \"atnWork\": {\r\n    \"workWithAtn\": true,\r\n    \"workWithAtnHours\": 4\r\n  },\r\n  \"reportHistories\":[\r\n    {\r\n        \"time\": \"20:00\",\r\n        \"info\": \"Koniec zmiany\"\r\n    }\r\n  ],\r\n  \"aggregatesWithoutOilWeights\":[\r\n   10,10\r\n  ],\r\n  \"alCuRefrigeratorWeights\":[\r\n   20,20\r\n  ],\r\n  \"alCuPackageIncompleteWeight\": 200,\r\n  \"refrigeratorPowerCableWeights\":[\r\n   10,10\r\n  ],\r\n   \"oilFromAggregatesWeights\":[\r\n   10,10\r\n  ],\r\n   \"psAbsRefrigeratorWeights\":[\r\n   10,10\r\n  ],\r\n  \"psAbsRefrigeratorIncompleteWeight\": 10,\r\n  \"aluminiumWeights\":[\r\n   60,10\r\n  ],\r\n  \"aggregatesWithOilFromWarehouseWeights\":[\r\n   50,10\r\n  ],\r\n  \"aggregatesWithOilWeights\":[\r\n   50,10\r\n  ]\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/reports/v1/update?date=2022-12-05&shift=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"reports",
+								"v1",
+								"update"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2022-12-05"
+								},
+								{
+									"key": "shift",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteReport (Requires MANAGER or ADMIN)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/reports/v1/delete?date=2022-12-05&shift=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"reports",
+								"v1",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2022-12-05"
+								},
+								{
+									"key": "shift",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "employees",
+			"item": [
+				{
+					"name": "createEmployee (Requires MANAGER or ADMIN))",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\":{\r\n        \"firstName\": \"{{$randomFirstName}}\",\r\n        \"lastName\": \"{{$randomLastName}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/employee/v1/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"employee",
+								"v1",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchEmployeeById (Requires URT_LEADER)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "personalIdentityNumber",
+								"value": "12456478801",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9000/employee/v1/fetch?employeeId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"employee",
+								"v1",
+								"fetch"
+							],
+							"query": [
+								{
+									"key": "employeeId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchEmployeeByFullName (Requires URT_LEADER)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/employee/v1/fetch-by-fullName?firstName=Daniel&lastName=Winiarczyk",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"employee",
+								"v1",
+								"fetch-by-fullName"
+							],
+							"query": [
+								{
+									"key": "firstName",
+									"value": "Daniel"
+								},
+								{
+									"key": "lastName",
+									"value": "Winiarczyk"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchAll (Requires URT_LEADER)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWN5Y2xpbmdhZG1pbiIsImlhdCI6MTcxMzUwMDc5MSwiZXhwIjoxNzEzNTAxNjkxfQ.l_Mx_rno2f839GriRBo1QYajWxulacdzpsZkTUqYAudO4jYpewcTeZFAmwhFrY2w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/employee/v1/fetch-all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"employee",
+								"v1",
+								"fetch-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchAllActive (Requires URT_LEADER)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWN5Y2xpbmdhZG1pbiIsImlhdCI6MTcxMzUwMDc5MSwiZXhwIjoxNzEzNTAxNjkxfQ.l_Mx_rno2f839GriRBo1QYajWxulacdzpsZkTUqYAudO4jYpewcTeZFAmwhFrY2w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/employee/v1/fetch-all-active",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"employee",
+								"v1",
+								"fetch-all-active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchAll Inactive (Requires URT_LEADER)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWN5Y2xpbmdhZG1pbiIsImlhdCI6MTcxMzUwMDc5MSwiZXhwIjoxNzEzNTAxNjkxfQ.l_Mx_rno2f839GriRBo1QYajWxulacdzpsZkTUqYAudO4jYpewcTeZFAmwhFrY2w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/employee/v1/fetch-all-inactive",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"employee",
+								"v1",
+								"fetch-all-inactive"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateEmployee (Requires MANAGER or ADMIN)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWN5Y2xpbmdhZG1pbiIsImlhdCI6MTcxMzUwMTgyMywiZXhwIjoxNzEzNTAyNzIzfQ.5ywIeJ1w7NkmMTx3T5ZYSkQ9qHlJ55MYC9HmSmxRSq3unh5ZzOh2tJv5xhUCroLo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\":{\r\n        \"firstName\": \"JAN\",\r\n        \"lastName\": \"Kowalski\"\r\n    },\r\n    \"active\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/employee/v1/update?employeeId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"employee",
+								"v1",
+								"update"
+							],
+							"query": [
+								{
+									"key": "employeeId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "security",
+			"item": [
+				{
+					"name": "logIn (Permit all)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"recyclingadmin\",\r\n    \"password\": \"recyclingpassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addUser (Requires ADMIN)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWN5Y2xpbmdhZG1pbiIsImlhdCI6MTcxMzUwMzI5MSwiZXhwIjoxNzEzNTA0MTkxfQ.4Y6Jp3-ZQhB4HF4P2l3-IquvWHhqC2Qm4zRAqgcq8Gf5x2_0D1SMfblgTo_uIi3n",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"username\": \"user\",\r\n    \"password\": \"password\",\r\n    \"role\": \"URT_LEADER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/add-user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"add-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser (Requires ADMIN)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWN5Y2xpbmdhZG1pbiIsImlhdCI6MTcxMzUwMzI5MSwiZXhwIjoxNzEzNTA0MTkxfQ.4Y6Jp3-ZQhB4HF4P2l3-IquvWHhqC2Qm4zRAqgcq8Gf5x2_0D1SMfblgTo_uIi3n",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/delete-user?username=user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"delete-user"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "user"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

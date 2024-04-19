@@ -3,7 +3,9 @@ package com.recykling.report.urtReport.controller.request;
 
 import com.recykling.report.valueObjects.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

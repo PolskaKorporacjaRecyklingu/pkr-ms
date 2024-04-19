@@ -4,7 +4,6 @@ import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.*;
 
 @Embeddable
-
 public record RobotWork(
         @NotNull(message = "WorkWithRobot can not be null")
         Boolean workWithRobot,
