@@ -67,4 +67,36 @@ public class UrtReportController {
                 .status(HttpStatus.OK)
                 .body(urtReportDto);
     }
+    @PutMapping(path = "/update")
+    public ResponseEntity<UrtReportDto> updateReport(
+            @NotNull(message = "Date can not be null")
+            @Valid @RequestParam LocalDate date,
+
+            @NotNull(message = "Shift can not be null")
+            @Min(value = 1, message = "There are 3 shifts")
+            @Max(value = 3, message = "There are 3 shifts")
+            @Valid @RequestParam Integer shift,
+            @RequestBody @Valid @NotNull RequestCreateUrtReport request
+    ){
+        UrtReportDto urtReportDto = iUrtReportService.updateReport(date, shift, request);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(urtReportDto);
+    }
+
+    @DeleteMapping(path = "/delete")
+    public ResponseEntity<ResponseDto> deleteReport(
+            @NotNull(message = "Date can not be null")
+            @Valid @RequestParam LocalDate date,
+
+            @NotNull(message = "Shift can not be null")
+            @Min(value = 1, message = "There are 3 shifts")
+            @Max(value = 3, message = "There are 3 shifts")
+            @Valid @RequestParam Integer shift
+    ){
+        iUrtReportService.deleteReport(date, shift);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .body(new ResponseDto("204", "Report deleted successfully"));
+    }
 }

@@ -12,6 +12,7 @@ import com.recykling.report.valueObjects.ReportDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * @author WiniaR21
@@ -30,29 +31,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
      */
     @Override
     public void createReport(RequestCreateUrtReport request) {
-
-        UrtReport urtReport = new UrtReport.ReportBuilder(employeeRepository)
-                .reportData(request.getReportDate())
-                .leaders(request.getLeadersId())
-                .forkliftOperators(request.getForkliftOperatorsId())
-                .brigade(request.getBrigadeEmployeesId())
-                .refrigeratorCount(request.getRefrigeratorCount())
-                .robotWork(request.getRobotWork())
-                .atnWork(request.getAtnWork())
-                .alCuPackageIncomplete(request.getAlCuPackageIncompleteWeight())
-                .psAbsRefrigeratorIncompleteWeight(request.getPsAbsRefrigeratorIncompleteWeight())
-                .build();
-
-        urtReport.setupUrtReportHistories(request.getReportHistories());
-        urtReport.setupAggregatesWithoutOilWeights(request.getAggregatesWithoutOilWeights());
-        urtReport.setupAlCuRefrigeratorWeights(request.getAlCuRefrigeratorWeights());
-        urtReport.setupRefrigeratorPowerCableWeights(request.getRefrigeratorPowerCableWeights());
-        urtReport.setupOilFromAggregatesWeights(request.getOilFromAggregatesWeights());
-        urtReport.setupPsAbsRefrigeratorWeights(request.getPsAbsRefrigeratorWeights());
-        urtReport.setupAggregatesWithOilWeights(request.getAggregatesWithOilWeights());
-        urtReport.setupAluminiumWeights(request.getAluminiumWeights());
-        urtReport.setupAggregatesWithOilFromWarehouseWeights(request.getAggregatesWithOilFromWarehouseWeights());
-
+        UrtReport urtReport = buildReport(request);
         urtReportRepository.save(urtReport);
     }
 
@@ -65,7 +44,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
         UrtReport urtReport
                 = urtReportRepository.findById(urtReportId)
                 .orElseThrow(() -> new ResourceNotFoundException("UrtReport", "urtReportId", urtReportId.toString())
-        );
+                );
 
         return mapUrtReportToDto(urtReport);
     }
@@ -81,10 +60,44 @@ public class UrtReportServiceImpl implements IUrtReportService {
         UrtReport urtReport
                 = urtReportRepository.findByReportDate(new ReportDate(date, shift))
                 .orElseThrow(
-                    () -> new ResourceNotFoundException("urtReport", "reportData", new ReportDate(date,shift).toString())
+                        () -> new ResourceNotFoundException("urtReport", "reportData", new ReportDate(date,shift).toString())
                 );
 
         return mapUrtReportToDto(urtReport);
+    }
+
+    /**
+     * @param date    - Date of report.
+     * @param shift   - Shift of report.
+     * @param request - Input RequestCreateUrtReport object.
+     */
+    @Override
+    public UrtReportDto updateReport(LocalDate date, Integer shift, RequestCreateUrtReport request) {
+        Optional<UrtReport> optionalUrtReport = urtReportRepository.findByReportDate(new ReportDate(date, shift));
+
+        if (optionalUrtReport.isEmpty()){
+            throw new ResourceNotFoundException("urtReport", "ReportData", new ReportDate(date, shift).toString());
+        }
+        else {
+            UrtReport urtReport = buildReport(request);
+            urtReportRepository.delete(optionalUrtReport.get());
+            return mapUrtReportToDto(urtReportRepository.save(urtReport));
+        }
+    }
+
+    /**
+     * @param date  - Date of report.
+     * @param shift - Shift of report.
+     */
+    @Override
+    public void deleteReport(LocalDate date, Integer shift) {
+        Optional<UrtReport> optionalUrtReport = urtReportRepository.findByReportDate(new ReportDate(date, shift));
+        if (optionalUrtReport.isEmpty()){
+            throw new ResourceNotFoundException("urtReport", "ReportData", new ReportDate(date, shift).toString());
+        }
+        else {
+            urtReportRepository.delete(optionalUrtReport.get());
+        }
     }
 
     /**
@@ -112,5 +125,30 @@ public class UrtReportServiceImpl implements IUrtReportService {
                 .aluminiumWeights(urtReport.getAluminiumWeights())
                 .aggregatesWithOilFromWarehouseWeights(urtReport.getAggregatesWithOilFromWarehouseWeights())
                 .build();
+    }
+    private UrtReport buildReport(RequestCreateUrtReport request){
+        UrtReport urtReport = new UrtReport.ReportBuilder(employeeRepository)
+                .reportData(request.getReportDate())
+                .leaders(request.getLeadersId())
+                .forkliftOperators(request.getForkliftOperatorsId())
+                .brigade(request.getBrigadeEmployeesId())
+                .refrigeratorCount(request.getRefrigeratorCount())
+                .robotWork(request.getRobotWork())
+                .atnWork(request.getAtnWork())
+                .alCuPackageIncomplete(request.getAlCuPackageIncompleteWeight())
+                .psAbsRefrigeratorIncompleteWeight(request.getPsAbsRefrigeratorIncompleteWeight())
+                .build();
+
+        urtReport.setupUrtReportHistories(request.getReportHistories());
+        urtReport.setupAggregatesWithoutOilWeights(request.getAggregatesWithoutOilWeights());
+        urtReport.setupAlCuRefrigeratorWeights(request.getAlCuRefrigeratorWeights());
+        urtReport.setupRefrigeratorPowerCableWeights(request.getRefrigeratorPowerCableWeights());
+        urtReport.setupOilFromAggregatesWeights(request.getOilFromAggregatesWeights());
+        urtReport.setupPsAbsRefrigeratorWeights(request.getPsAbsRefrigeratorWeights());
+        urtReport.setupAggregatesWithOilWeights(request.getAggregatesWithOilWeights());
+        urtReport.setupAluminiumWeights(request.getAluminiumWeights());
+        urtReport.setupAggregatesWithOilFromWarehouseWeights(request.getAggregatesWithOilFromWarehouseWeights());
+
+        return urtReport;
     }
 }
