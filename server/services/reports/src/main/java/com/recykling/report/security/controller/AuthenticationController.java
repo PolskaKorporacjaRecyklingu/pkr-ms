@@ -13,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,8 +21,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
         private final IAuthenticationService iAuthenticationService;
 
-        @Secured({"MANAGER", "ADMIN"})
-        @PostMapping(path = "/register")
+        @Secured({"ADMIN"})
+        @DeleteMapping(path = "/delete-user")
+        public ResponseEntity<ResponseDto> deleteUser(
+                @NotNull @RequestParam String username
+        ){
+            iAuthenticationService.deleteUser(username);
+
+            return ResponseEntity
+                    .status(HttpStatus.NO_CONTENT)
+                    .body(new ResponseDto("204", "User " + username + " deleted successfully"));
+        }
+
+        @Secured({"ADMIN"})
+        @PostMapping(path = "/add-user")
         public ResponseEntity<ResponseDto> register(
                 @Valid @NotNull @RequestBody RegisterRequest request
                 ){

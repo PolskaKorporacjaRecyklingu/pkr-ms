@@ -29,4 +29,17 @@ public interface IUrtReportService {
      * @return - Returns matching UrtReport in UrtReportDto format.
      */
     UrtReportDto fetchReportByReportData(LocalDate date, Integer shift);
+
+    /**
+     * @param date    - Date of report.
+     * @param shift   - Shift of report.
+     * @param request - Input RequestCreateUrtReport object.
+     */
+     UrtReportDto updateReport(LocalDate date, Integer shift, RequestCreateUrtReport request);
+
+    /**
+     * @param date  - Date of report.
+     * @param shift - Shift of report.
+     */
+    void deleteReport(LocalDate date, Integer shift);
 }

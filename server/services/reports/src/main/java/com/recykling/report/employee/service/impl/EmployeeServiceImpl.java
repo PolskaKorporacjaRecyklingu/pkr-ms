@@ -42,8 +42,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public EmployeeDto fetchEmployeeById(Long employeeId) {
-        Employee employee
-                = employeeRepository.findById(employeeId)
+        Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(
                 () -> new ResourceNotFoundException("Employee", "employeeId", employeeId.toString())
         );
@@ -90,8 +89,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public List<EmployeeDto> fetchActiveEmployees() {
-        //  TODO
-        return null;
+        List<EmployeeDto> employeesDto = new ArrayList<>();
+        employeeRepository.findAllByActive(true).forEach(employee ->
+                employeesDto.add(new EmployeeDto.EmployeeDtoBuilder()
+                        .employeeId(employee.getEmployeeId())
+                        .fullName(employee.getFullName())
+                        .active(employee.getActive())
+                        .build()));
+
+        return employeesDto;
     }
 
     /**
@@ -100,8 +106,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public List<EmployeeDto> fetchInactiveEmployees() {
-        //  TODO
-        return null;
+        List<EmployeeDto> employeesDto = new ArrayList<>();
+        employeeRepository.findAllByActive(false).forEach(employee ->
+                employeesDto.add(new EmployeeDto.EmployeeDtoBuilder()
+                        .employeeId(employee.getEmployeeId())
+                        .fullName(employee.getFullName())
+                        .active(employee.getActive())
+                        .build()));
+
+        return employeesDto;
     }
 
     /**
@@ -110,8 +123,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public List<EmployeeDto> fetchAllEmployees() {
-        //  TODO
-        return null;
+        List<EmployeeDto> employeesDto = new ArrayList<>();
+        employeeRepository.findAll().forEach(employee ->
+                employeesDto.add(new EmployeeDto.EmployeeDtoBuilder()
+                        .employeeId(employee.getEmployeeId())
+                        .fullName(employee.getFullName())
+                        .active(employee.getActive())
+                        .build()));
+
+        return employeesDto;
     }
 
     /**
@@ -119,13 +139,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
      * @param request - Input RequestUpdateEmployee object.
      */
     @Override
-    public void updateEmployee(RequestUpdateEmployee request) {
-        employeeRepository.findById(request.getEmployeeId()).orElseThrow(
-                () -> new ResourceNotFoundException("Employee","employeeId", request.getEmployeeId().toString())
+    public void updateEmployee(RequestUpdateEmployee request, Long employeeId) {
+        employeeRepository.findById(employeeId).orElseThrow(
+                () -> new ResourceNotFoundException("Employee","employeeId", employeeId.toString())
         );
 
         Employee employee = new Employee.EmployeeBuilder()
-                .employeeId(request.getEmployeeId())
+                .employeeId(employeeId)
                 .fullName(request.getFullName())
                 .active(request.getActive())
                 .build();

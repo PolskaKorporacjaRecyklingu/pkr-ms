@@ -12,10 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class RequestUpdateEmployee {
-
-    @NotNull(message = "EmployeeId can not be null")
-    private Long employeeId;
-
+    
     @Valid @NotNull(message = "FullName can not be null")
     private FullName fullName;
 

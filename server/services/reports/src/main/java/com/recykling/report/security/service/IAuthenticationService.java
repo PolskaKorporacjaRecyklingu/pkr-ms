@@ -20,4 +20,10 @@ public interface IAuthenticationService {
      * @return - Returns AuthenticationResponse with contains JWT token and expiration date.
      */
     AuthenticationResponse authenticate(LoginRequest request);
+
+    /**
+     *
+     * @param username - Username of user to delete.
+     */
+    void deleteUser(String username);
 }

@@ -1,4 +1,4 @@
-package com.recykling.report.exception.dto;
+package com.recykling.report.exception;
 
 public class UniqueUsernameException extends RuntimeException{
 
