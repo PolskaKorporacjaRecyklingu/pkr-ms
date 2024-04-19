@@ -15,6 +15,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ReportBase {
+    @Column(unique = true)
     private ReportDate reportDate;
     private EmployeesCount employeesCount;
 }

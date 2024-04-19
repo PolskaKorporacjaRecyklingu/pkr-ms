@@ -1,6 +1,7 @@
 package com.recykling.report.urtReport.service.impl;
 
 
+import com.recykling.report.exception.UniqueRaportDateException;
 import com.recykling.report.urtReport.service.IUrtReportService;
 import com.recykling.report.urtReport.controller.request.RequestCreateUrtReport;
 import com.recykling.report.urtReport.dto.UrtReportDto;
@@ -31,8 +32,15 @@ public class UrtReportServiceImpl implements IUrtReportService {
      */
     @Override
     public void createReport(RequestCreateUrtReport request) {
-        UrtReport urtReport = buildReport(request);
-        urtReportRepository.save(urtReport);
+        Optional<UrtReport> optionalUrtReport = urtReportRepository.findByReportDate(request.getReportDate());
+
+        if (optionalUrtReport.isPresent()){
+            throw new UniqueRaportDateException(request.getReportDate());
+        }
+        else {
+            UrtReport urtReport = buildReport(request);
+            urtReportRepository.save(urtReport);
+        }
     }
 
     /**
