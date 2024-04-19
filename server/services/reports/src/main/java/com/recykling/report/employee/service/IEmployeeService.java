@@ -54,6 +54,6 @@ public interface IEmployeeService {
      *
      * @param request - Input RequestUpdateEmployee object.
      */
-    void updateEmployee(RequestUpdateEmployee request);
+    void updateEmployee(RequestUpdateEmployee request,Long employeeId);
 
 }

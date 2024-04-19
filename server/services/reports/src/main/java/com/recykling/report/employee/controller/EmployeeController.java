@@ -7,6 +7,7 @@ import com.recykling.report.employee.controller.request.RequestUpdateEmployee;
 import com.recykling.report.employee.service.IEmployeeService;
 import com.recykling.report.exception.dto.ResponseDto;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -95,8 +96,11 @@ public class EmployeeController {
     }
     @Secured({"MANAGER", "ADMIN"})
     @PutMapping(path = "/update")
-    public ResponseEntity<ResponseDto> updateEmployee(@RequestBody RequestUpdateEmployee request){
-        iEmployeeService.updateEmployee(request);
+    public ResponseEntity<ResponseDto> updateEmployee(
+            @Valid @RequestBody RequestUpdateEmployee request,
+            @NotNull @RequestParam Long employeeId)
+    {
+        iEmployeeService.updateEmployee(request, employeeId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto("200","Request proceed successfully"));

@@ -139,13 +139,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
      * @param request - Input RequestUpdateEmployee object.
      */
     @Override
-    public void updateEmployee(RequestUpdateEmployee request) {
-        employeeRepository.findById(request.getEmployeeId()).orElseThrow(
-                () -> new ResourceNotFoundException("Employee","employeeId", request.getEmployeeId().toString())
+    public void updateEmployee(RequestUpdateEmployee request, Long employeeId) {
+        employeeRepository.findById(employeeId).orElseThrow(
+                () -> new ResourceNotFoundException("Employee","employeeId", employeeId.toString())
         );
 
         Employee employee = new Employee.EmployeeBuilder()
-                .employeeId(request.getEmployeeId())
+                .employeeId(employeeId)
                 .fullName(request.getFullName())
                 .active(request.getActive())
                 .build();
