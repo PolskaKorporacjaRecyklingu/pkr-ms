@@ -13,4 +13,5 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findAllByFullName(FullName fullName);
+    List<Employee> findAllByActive(Boolean active);
 }

@@ -42,8 +42,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public EmployeeDto fetchEmployeeById(Long employeeId) {
-        Employee employee
-                = employeeRepository.findById(employeeId)
+        Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(
                 () -> new ResourceNotFoundException("Employee", "employeeId", employeeId.toString())
         );
@@ -90,8 +89,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public List<EmployeeDto> fetchActiveEmployees() {
-        //  TODO
-        return null;
+        List<EmployeeDto> employeesDto = new ArrayList<>();
+        employeeRepository.findAllByActive(true).forEach(employee ->
+                employeesDto.add(new EmployeeDto.EmployeeDtoBuilder()
+                        .employeeId(employee.getEmployeeId())
+                        .fullName(employee.getFullName())
+                        .active(employee.getActive())
+                        .build()));
+
+        return employeesDto;
     }
 
     /**
@@ -100,7 +106,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public List<EmployeeDto> fetchInactiveEmployees() {
-        return null;
+        List<EmployeeDto> employeesDto = new ArrayList<>();
+        employeeRepository.findAllByActive(false).forEach(employee ->
+                employeesDto.add(new EmployeeDto.EmployeeDtoBuilder()
+                        .employeeId(employee.getEmployeeId())
+                        .fullName(employee.getFullName())
+                        .active(employee.getActive())
+                        .build()));
+
+        return employeesDto;
     }
 
     /**

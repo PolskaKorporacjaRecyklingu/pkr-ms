@@ -39,6 +39,7 @@ public class EmployeeController {
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto("201","Employee created successfully"));
     }
+
     @Secured({"URT_LEADER","MANAGER", "ADMIN"})
     @GetMapping(path = "/fetch")
     public ResponseEntity<EmployeeDto> fetchEmployeeById(
@@ -50,6 +51,7 @@ public class EmployeeController {
                 .status(HttpStatus.OK)
                 .body(employeeDto);
     }
+
     @Secured({"URT_LEADER","MANAGER", "ADMIN"})
     @GetMapping(path = "/fetch-by-fullName")
     public ResponseEntity<List<EmployeeDto>> fetchEmployeeByFullName(
@@ -62,9 +64,30 @@ public class EmployeeController {
                 .status(HttpStatus.OK)
                 .body(employeesDto);
     }
+
+    @Secured({"URT_LEADER","MANAGER", "ADMIN"})
     @GetMapping(path = "/fetch-all")
     public ResponseEntity<List<EmployeeDto>> fetchAllEmployees(){
         List<EmployeeDto> employeesDto = iEmployeeService.fetchAllEmployees();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(employeesDto);
+    }
+
+    @Secured({"URT_LEADER","MANAGER", "ADMIN"})
+    @GetMapping(path = "/fetch-all-active")
+    public ResponseEntity<List<EmployeeDto>> fetchActiveEmployees(){
+        List<EmployeeDto> employeesDto = iEmployeeService.fetchActiveEmployees();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(employeesDto);
+    }
+    @Secured({"URT_LEADER","MANAGER", "ADMIN"})
+    @GetMapping(path = "/fetch-all-inactive")
+    public ResponseEntity<List<EmployeeDto>> fetchInactiveEmployees(){
+        List<EmployeeDto> employeesDto = iEmployeeService.fetchInactiveEmployees();
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -78,4 +101,6 @@ public class EmployeeController {
                 .status(HttpStatus.OK)
                 .body(new ResponseDto("200","Request proceed successfully"));
     }
+
+
 }
