@@ -1,6 +1,6 @@
 package com.recykling.report.urtReport.manyToOne.urtOilFromAggregatesWeights;
 
-import com.recykling.report.urtReport.manyToOne.urtOilFromAggregatesWeights.OilFromAggregatesWeights;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

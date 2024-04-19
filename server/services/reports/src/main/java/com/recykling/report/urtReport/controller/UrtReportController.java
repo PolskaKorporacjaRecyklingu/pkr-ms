@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,7 @@ import java.time.LocalDate;
 public class UrtReportController {
     private final IUrtReportService iUrtReportService;
 
+    @Secured({"URT_LEADER","MANAGER", "ADMIN"})
     @PostMapping(path = "/create")
     public ResponseEntity<ResponseDto> createReport(@RequestBody @Valid @NotNull RequestCreateUrtReport request){
         iUrtReportService.createReport(request);
@@ -34,7 +36,7 @@ public class UrtReportController {
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto("201", "created"));
     }
-
+    @Secured({"URT_LEADER","MANAGER", "ADMIN"})
     @GetMapping(path = "/fetch")
     public ResponseEntity<UrtReportDto> fetchReportById(
             @NotNull(message = "UrtReportId can not be null")
@@ -45,7 +47,7 @@ public class UrtReportController {
                 .status(HttpStatus.OK)
                 .body(urtReportDto);
     }
-
+    @Secured({"URT_LEADER","MANAGER", "ADMIN"})
     @GetMapping(path = "/fetch-by-data")
     public ResponseEntity<UrtReportDto> fetchReportByReportData(
 
