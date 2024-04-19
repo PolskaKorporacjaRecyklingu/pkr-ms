@@ -67,6 +67,7 @@ public class UrtReportController {
                 .status(HttpStatus.OK)
                 .body(urtReportDto);
     }
+    @Secured({"URT_LEADER","MANAGER", "ADMIN"})
     @PutMapping(path = "/update")
     public ResponseEntity<UrtReportDto> updateReport(
             @NotNull(message = "Date can not be null")
@@ -83,7 +84,7 @@ public class UrtReportController {
                 .status(HttpStatus.OK)
                 .body(urtReportDto);
     }
-
+    @Secured({"MANAGER", "ADMIN"})
     @DeleteMapping(path = "/delete")
     public ResponseEntity<ResponseDto> deleteReport(
             @NotNull(message = "Date can not be null")

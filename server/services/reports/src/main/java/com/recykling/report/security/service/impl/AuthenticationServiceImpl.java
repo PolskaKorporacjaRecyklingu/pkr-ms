@@ -1,5 +1,6 @@
 package com.recykling.report.security.service.impl;
 
+import com.recykling.report.exception.ResourceNotFoundException;
 import com.recykling.report.exception.dto.UniqueUsernameException;
 import com.recykling.report.security.controller.request.LoginRequest;
 import com.recykling.report.security.controller.request.RegisterRequest;
@@ -68,5 +69,19 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         Date expirationDate = iJwtService.extractExpirationDate(token);
 
         return new AuthenticationResponse(token, expirationDate);
+    }
+
+    /**
+     * @param username - Username of user to delete.
+     */
+    @Override
+    public void deleteUser(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+
+        if(user.isEmpty()){
+            throw new ResourceNotFoundException("user", "username", username);
+        } else {
+            userRepository.delete(user.get());
+        }
     }
 }
