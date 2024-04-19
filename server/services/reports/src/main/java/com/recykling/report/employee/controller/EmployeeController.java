@@ -62,6 +62,14 @@ public class EmployeeController {
                 .status(HttpStatus.OK)
                 .body(employeesDto);
     }
+    @GetMapping(path = "/fetch-all")
+    public ResponseEntity<List<EmployeeDto>> fetchAllEmployees(){
+        List<EmployeeDto> employeesDto = iEmployeeService.fetchAllEmployees();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(employeesDto);
+    }
     @Secured({"MANAGER", "ADMIN"})
     @PutMapping(path = "/update")
     public ResponseEntity<ResponseDto> updateEmployee(@RequestBody RequestUpdateEmployee request){

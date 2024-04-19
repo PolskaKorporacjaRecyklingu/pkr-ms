@@ -100,7 +100,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public List<EmployeeDto> fetchInactiveEmployees() {
-        //  TODO
         return null;
     }
 
@@ -110,8 +109,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public List<EmployeeDto> fetchAllEmployees() {
-        //  TODO
-        return null;
+        List<EmployeeDto> employeesDto = new ArrayList<>();
+        employeeRepository.findAll().forEach(employee ->
+                employeesDto.add(new EmployeeDto.EmployeeDtoBuilder()
+                        .employeeId(employee.getEmployeeId())
+                        .fullName(employee.getFullName())
+                        .active(employee.getActive())
+                        .build()));
+
+        return employeesDto;
     }
 
     /**
