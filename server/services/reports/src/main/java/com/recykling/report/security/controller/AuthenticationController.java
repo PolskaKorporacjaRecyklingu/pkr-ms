@@ -6,7 +6,6 @@ import com.recykling.report.security.controller.request.LoginRequest;
 import com.recykling.report.security.controller.request.RegisterRequest;
 import com.recykling.report.security.controller.response.AuthenticationResponse;
 import com.recykling.report.security.service.IAuthenticationService;
-import com.recykling.report.security.service.impl.AuthenticationServiceImpl;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;

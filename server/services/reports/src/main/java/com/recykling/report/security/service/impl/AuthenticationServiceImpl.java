@@ -1,5 +1,8 @@
 package com.recykling.report.security.service.impl;
 
+import com.recykling.report.employee.Employee;
+import com.recykling.report.employee.repo.EmployeeRepository;
+import com.recykling.report.employee.service.IEmployeeService;
 import com.recykling.report.exception.ResourceNotFoundException;
 import com.recykling.report.exception.UniqueUsernameException;
 import com.recykling.report.security.controller.request.LoginRequest;
@@ -9,6 +12,7 @@ import com.recykling.report.security.service.IAuthenticationService;
 import com.recykling.report.security.service.IJwtService;
 import com.recykling.report.security.user.User;
 import com.recykling.report.security.user.UserRepository;
+import com.recykling.report.valueObjects.FullName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +30,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final IJwtService iJwtService;
     private final AuthenticationManager authenticationManager;
+    private final EmployeeRepository employeeRepository;
 
     /**
      * Function registering user
@@ -49,6 +54,14 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         user.setRole(request.getRole());
 
         userRepository.save(user);
+
+        Employee employee = new Employee.EmployeeBuilder()
+                .fullName(new FullName(request.getFirstName(), request.getLastName()))
+                .active(true)
+                .hasAccount(true)
+                .build();
+
+        employeeRepository.save(employee);
     }
 
     /**

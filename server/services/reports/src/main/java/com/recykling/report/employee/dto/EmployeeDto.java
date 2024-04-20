@@ -14,11 +14,13 @@ public class EmployeeDto {
     private Long employeeId;
     private Boolean active;
     private FullName fullName;
+    private Boolean hasAccount;
 
     private EmployeeDto(EmployeeDtoBuilder employeeDtoBuilder){
         this.employeeId = employeeDtoBuilder.employeeId;
         this.fullName = employeeDtoBuilder.fullName;
         this.active = employeeDtoBuilder.active;
+        this.hasAccount = employeeDtoBuilder.hasAccount;
     }
 
     /**
@@ -28,6 +30,7 @@ public class EmployeeDto {
         private Long employeeId;
         private FullName fullName;
         private Boolean active;
+        private Boolean hasAccount;
         public EmployeeDtoBuilder employeeId(Long employeeId){
             this.employeeId = employeeId;
             return this;
@@ -38,6 +41,10 @@ public class EmployeeDto {
         }
         public EmployeeDtoBuilder active(Boolean active){
             this.active = active;
+            return this;
+        }
+        public EmployeeDtoBuilder hasAccount(Boolean hasAccount){
+            this.hasAccount = hasAccount;
             return this;
         }
 

@@ -30,6 +30,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
         Employee employee = new Employee.EmployeeBuilder()
                 .fullName(request.getFullName())
                 .active(true)
+                .hasAccount(false)
                 .build();
 
         employeeRepository.save(employee);
@@ -72,13 +73,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
         }
 
         List<EmployeeDto> employeesDto = new ArrayList<>();
-
-        employees.forEach(employee -> employeesDto
-                .add(new EmployeeDto.EmployeeDtoBuilder()
-                        .fullName(employee.getFullName())
-                        .employeeId(employee.getEmployeeId())
-                        .active(employee.getActive())
-                        .build()));
+        employees.forEach(employee -> employeesDto.add(buildEmployeeDto(employee)));
 
         return employeesDto;
     }
@@ -90,13 +85,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public List<EmployeeDto> fetchActiveEmployees() {
         List<EmployeeDto> employeesDto = new ArrayList<>();
-        employeeRepository.findAllByActive(true).forEach(employee ->
-                employeesDto.add(new EmployeeDto.EmployeeDtoBuilder()
-                        .employeeId(employee.getEmployeeId())
-                        .fullName(employee.getFullName())
-                        .active(employee.getActive())
-                        .build()));
-
+        employeeRepository
+                .findAllByActive(true)
+                .forEach(employee -> employeesDto.add(buildEmployeeDto(employee)));
         return employeesDto;
     }
 
@@ -107,12 +98,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public List<EmployeeDto> fetchInactiveEmployees() {
         List<EmployeeDto> employeesDto = new ArrayList<>();
-        employeeRepository.findAllByActive(false).forEach(employee ->
-                employeesDto.add(new EmployeeDto.EmployeeDtoBuilder()
-                        .employeeId(employee.getEmployeeId())
-                        .fullName(employee.getFullName())
-                        .active(employee.getActive())
-                        .build()));
+        employeeRepository
+                .findAllByActive(false)
+                .forEach(employee -> employeesDto.add(buildEmployeeDto(employee)));
 
         return employeesDto;
     }
@@ -124,12 +112,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public List<EmployeeDto> fetchAllEmployees() {
         List<EmployeeDto> employeesDto = new ArrayList<>();
-        employeeRepository.findAll().forEach(employee ->
-                employeesDto.add(new EmployeeDto.EmployeeDtoBuilder()
-                        .employeeId(employee.getEmployeeId())
-                        .fullName(employee.getFullName())
-                        .active(employee.getActive())
-                        .build()));
+        employeeRepository.findAll()
+                .forEach(employee ->
+                employeesDto.add(buildEmployeeDto(employee)));
 
         return employeesDto;
     }
@@ -153,4 +138,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
         employeeRepository.save(employee);
     }
 
+    public EmployeeDto buildEmployeeDto(Employee employee){
+        return new EmployeeDto.EmployeeDtoBuilder()
+                .employeeId(employee.getEmployeeId())
+                .fullName(employee.getFullName())
+                .active(employee.getActive())
+                .hasAccount(employee.getHasAccount())
+                .build();
+    }
 }
