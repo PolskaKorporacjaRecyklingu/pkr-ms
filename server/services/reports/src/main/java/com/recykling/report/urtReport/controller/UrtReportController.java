@@ -4,6 +4,7 @@ import com.recykling.report.urtReport.controller.request.RequestCreateUrtReport;
 import com.recykling.report.urtReport.dto.UrtReportDto;
 import com.recykling.report.urtReport.service.IUrtReportService;
 import com.recykling.report.exception.dto.ResponseDto;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +32,11 @@ public class UrtReportController {
 
     @Secured({"URT_LEADER","MANAGER", "ADMIN"})
     @PostMapping(path = "/create")
-    public ResponseEntity<ResponseDto> createReport(@RequestBody @Valid @NotNull RequestCreateUrtReport request){
-        iUrtReportService.createReport(request);
+    public ResponseEntity<ResponseDto> createReport(
+            @RequestBody @Valid @NotNull RequestCreateUrtReport request,
+            HttpServletRequest servletRequest
+    ){
+        iUrtReportService.createReport(request, servletRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto("201", "created"));

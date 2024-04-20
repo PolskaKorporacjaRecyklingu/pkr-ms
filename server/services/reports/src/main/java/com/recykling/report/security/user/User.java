@@ -1,5 +1,6 @@
 package com.recykling.report.security.user;
 
+import com.recykling.report.employee.Employee;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +35,8 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Employee employee;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

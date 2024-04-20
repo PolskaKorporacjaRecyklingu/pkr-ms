@@ -1,7 +1,12 @@
 package com.recykling.report.urtReport.service.impl;
 
 
+import com.recykling.report.employee.Employee;
+import com.recykling.report.exception.GivenLeaderHasNotAccount;
 import com.recykling.report.exception.UniqueReportDateException;
+import com.recykling.report.security.service.IJwtService;
+import com.recykling.report.security.user.User;
+import com.recykling.report.security.user.UserRepository;
 import com.recykling.report.urtReport.service.IUrtReportService;
 import com.recykling.report.urtReport.controller.request.RequestCreateUrtReport;
 import com.recykling.report.urtReport.dto.UrtReportDto;
@@ -10,9 +15,11 @@ import com.recykling.report.exception.ResourceNotFoundException;
 import com.recykling.report.employee.repo.EmployeeRepository;
 import com.recykling.report.urtReport.repo.UrtReportRepository;
 import com.recykling.report.valueObjects.ReportDate;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -23,6 +30,8 @@ import java.util.Optional;
 public class UrtReportServiceImpl implements IUrtReportService {
     private final UrtReportRepository urtReportRepository;
     private final EmployeeRepository employeeRepository;
+    private final IJwtService jwtService;
+    private final UserRepository userRepository;
     /**
      *
      * @param request - Input RequestCreateUrtReport object.
@@ -31,7 +40,7 @@ public class UrtReportServiceImpl implements IUrtReportService {
      *         second step is setting up all important info with are list of data.
      */
     @Override
-    public void createReport(RequestCreateUrtReport request) {
+    public void createReport(RequestCreateUrtReport request, HttpServletRequest servletRequest) {
         Optional<UrtReport> optionalUrtReport = urtReportRepository.findByReportDate(request.getReportDate());
 
         if (optionalUrtReport.isPresent()){
@@ -39,6 +48,13 @@ public class UrtReportServiceImpl implements IUrtReportService {
         }
         else {
             UrtReport urtReport = buildReport(request);
+
+            String authHeader = servletRequest.getHeader("Authorization");
+            String token = authHeader.substring(7);
+            String username = jwtService.extractUsername(token);
+            User user = userRepository.findByUsername(username).orElseThrow();
+            urtReport.getLeaders().add(user.getEmployee());
+
             urtReportRepository.save(urtReport);
         }
     }

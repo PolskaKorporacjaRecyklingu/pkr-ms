@@ -21,7 +21,6 @@ public class RequestCreateUrtReport {
     @NotNull(message = "ReportData can not be null")
     private ReportDate reportDate;
 
-    @NotNull(message = "LiederId can not be null")
     private List<Long> leadersId;
 
     @NotNull(message = "ForkliftOperatorsId can not be null")

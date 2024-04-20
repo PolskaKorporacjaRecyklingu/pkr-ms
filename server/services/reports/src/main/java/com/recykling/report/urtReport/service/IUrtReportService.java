@@ -2,6 +2,7 @@ package com.recykling.report.urtReport.service;
 
 import com.recykling.report.urtReport.controller.request.RequestCreateUrtReport;
 import com.recykling.report.urtReport.dto.UrtReportDto;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDate;
 
@@ -13,7 +14,7 @@ public interface IUrtReportService {
      *
      * @param request - Input RequestCreateUrtReport object.
      */
-    void createReport(RequestCreateUrtReport request);
+    void createReport(RequestCreateUrtReport request, HttpServletRequest servletRequest);
 
     /**
      *
