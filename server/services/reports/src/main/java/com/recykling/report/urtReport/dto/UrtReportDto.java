@@ -15,7 +15,9 @@ import com.recykling.report.valueObjects.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author WiniaR21
@@ -26,14 +28,14 @@ import java.util.List;
 public class UrtReportDto {
 
     private ReportDate reportDate;
-    private List<EmployeeDto> leaders;
-    private List<EmployeeDto> forkliftOperators;
-    private List<EmployeeDto> brigade;
+    private Set<EmployeeDto> leaders;
+    private Set<EmployeeDto> forkliftOperators;
+    private Set<EmployeeDto> brigade;
     private Integer employeesCount;
     private RefrigeratorCount refrigeratorCount;
     private RobotWork robotWork;
     private AtnWork atnWork;
-    private List<ReportHistory> reportHistories;
+    private Set<ReportHistory> reportHistories;
     private AggregatesWithoutOilDto aggregatesWithoutOilWeights;
     private AlCuRefrigeratorWeightsDto alCuRefrigeratorWeights;
     private RefrigeratorPowerCableWeightsDto refrigeratorPowerCableWeights;
@@ -66,15 +68,15 @@ public class UrtReportDto {
     }
     public static class UrtReportDtoBuilder{
         private ReportDate reportDate;
-        private final List<EmployeeDto> leaders = new ArrayList<>();
-        private final List<EmployeeDto> forkliftOperators = new ArrayList<>();
-        private final List<EmployeeDto> brigade = new ArrayList<>();
+        private final Set<EmployeeDto> leaders = new HashSet<>();
+        private final Set<EmployeeDto> forkliftOperators = new HashSet<>();
+        private final Set<EmployeeDto> brigade = new HashSet<>();
         private RefrigeratorCount refrigeratorCount;
         private RobotWork robotWork;
         private AtnWork atnWork;
         private Integer employeesCount;
         private AggregatesWithoutOilDto aggregatesWithoutOilWeights;
-        private List<ReportHistory> reportHistories = new ArrayList<>();
+        private Set<ReportHistory> reportHistories = new HashSet<>();
         private AlCuRefrigeratorWeightsDto alCuRefrigeratorWeights;
         private RefrigeratorPowerCableWeightsDto refrigeratorPowerCableWeights;
         private OilFromAggregatesWeightsDto oilFromAggregatesWeights;
@@ -117,13 +119,9 @@ public class UrtReportDto {
          * @param leaders - Input List of Employee objects.
          * @apiNote - Function maps all the Employee into EmployeeDto and saving the into leaders.
          */
-        public UrtReportDtoBuilder leaders(List<Employee> leaders){
+        public UrtReportDtoBuilder leaders(Set<Employee> leaders){
             leaders.forEach(leader -> this.leaders
-                    .add(new EmployeeDto.EmployeeDtoBuilder()
-                            .employeeId(leader.getEmployeeId())
-                            .fullName(leader.getFullName())
-                            .active(leader.getActive())
-                            .build()));
+                    .add(buildEmployeeDto(leader)));
             return this;
         }
         /**
@@ -131,13 +129,9 @@ public class UrtReportDto {
          * @param forkliftOperators - Input List of Employee objects.
          * @apiNote - Function maps all the Employee into EmployeeDto and saving the into forkliftOperators.
          */
-        public UrtReportDtoBuilder forkliftOperators(List<Employee> forkliftOperators){
+        public UrtReportDtoBuilder forkliftOperators(Set<Employee> forkliftOperators){
             forkliftOperators.forEach(forkliftOperator -> this.forkliftOperators
-                    .add(new EmployeeDto.EmployeeDtoBuilder()
-                            .employeeId(forkliftOperator.getEmployeeId())
-                            .fullName(forkliftOperator.getFullName())
-                            .active(forkliftOperator.getActive())
-                            .build()));
+                    .add(buildEmployeeDto(forkliftOperator)));
             return this;
         }
         /**
@@ -145,13 +139,9 @@ public class UrtReportDto {
          * @param brigade - Input List of Employee objects.
          * @apiNote - Function maps all the Employee into EmployeeDto and saving the into brigade.
          */
-        public UrtReportDtoBuilder brigade(List<Employee> brigade){
+        public UrtReportDtoBuilder brigade(Set<Employee> brigade){
             brigade.forEach(brigadeMember -> this.brigade
-                    .add(new EmployeeDto.EmployeeDtoBuilder()
-                            .employeeId(brigadeMember.getEmployeeId())
-                            .fullName(brigadeMember.getFullName())
-                            .active(brigadeMember.getActive())
-                            .build()));
+                    .add(buildEmployeeDto(brigadeMember)));
             return this;
         }
         public UrtReportDtoBuilder reportData(ReportDate reportDate){
@@ -174,7 +164,7 @@ public class UrtReportDto {
             this.atnWork = atnWork;
             return this;
         }
-        public UrtReportDtoBuilder reportHistories(List<UrtReportHistory> urtReportHistories){
+        public UrtReportDtoBuilder reportHistories(Set<UrtReportHistory> urtReportHistories){
             urtReportHistories.forEach(history ->
                     reportHistories.add(new ReportHistory(history.getTime(),history.getInfo())));
             return this;
@@ -185,6 +175,15 @@ public class UrtReportDto {
         }
         public UrtReportDto build(){
             return new UrtReportDto(this);
+        }
+
+        private EmployeeDto buildEmployeeDto(Employee employee){
+            return  new EmployeeDto.EmployeeDtoBuilder()
+                    .employeeId(employee.getEmployeeId())
+                    .fullName(employee.getFullName())
+                    .active(employee.getActive())
+                    .hasAccount(employee.getHasAccount())
+                    .build();
         }
     }
 }

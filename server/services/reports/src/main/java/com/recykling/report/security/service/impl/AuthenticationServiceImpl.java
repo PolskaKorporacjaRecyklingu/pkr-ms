@@ -53,15 +53,15 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(request.getRole());
 
-        userRepository.save(user);
-
         Employee employee = new Employee.EmployeeBuilder()
                 .fullName(new FullName(request.getFirstName(), request.getLastName()))
                 .active(true)
                 .hasAccount(true)
                 .build();
 
-        employeeRepository.save(employee);
+        user.setEmployee(employee);
+
+        userRepository.save(user);
     }
 
     /**

@@ -29,7 +29,7 @@ public class Employee {
     private Boolean active;
 
     @Column(name = "has_account")
-    public Boolean hasAccount;
+    private Boolean hasAccount;
 
     @ManyToMany(mappedBy = "brigade")
     private List<UrtReport> brigade = new ArrayList<>();

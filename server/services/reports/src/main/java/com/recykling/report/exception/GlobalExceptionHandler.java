@@ -116,4 +116,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponseDTO, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(GivenLeaderHasNotAccount.class)
+    public ResponseEntity<ErrorResponseDto> handleAccessException(
+            GivenLeaderHasNotAccount exception,
+            WebRequest webRequest
+    )
+    {
+        ErrorResponseDto errorResponseDTO = new ErrorResponseDto(
+                webRequest.getDescription(false),
+                HttpStatus.FORBIDDEN,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponseDTO, HttpStatus.FORBIDDEN);
+    }
 }
