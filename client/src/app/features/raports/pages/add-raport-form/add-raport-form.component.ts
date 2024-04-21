@@ -9,11 +9,13 @@ import {
 import {addAriaReferencedId} from "@angular/cdk/a11y";
 import {CommonModule} from "@angular/common";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatCard, MatCardContent, MatCardHeader, MatCardModule} from "@angular/material/card";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-add-raport-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatSlideToggleModule],
+  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatSlideToggleModule, MatCardModule, MatButton],
   templateUrl: './add-raport-form.component.html',
   styleUrl: './add-raport-form.component.css',
   providers: [provideNativeDateAdapter()]

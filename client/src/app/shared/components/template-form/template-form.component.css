@@ -2,13 +2,6 @@
   width: 100%;
 }
 
-.input-width {
-  width: 80%;
-}
-.button-width {
-  width: 20%;
-}
-
 .shipping-card {
   min-width: 120px;
   margin: 20px auto;
@@ -31,13 +24,4 @@
 
 .col:last-child {
   margin-right: 0;
-}
-
-
-.flex > .align-button-with-input {
-  padding-bottom: 1.34375em;
-}
-
-.align-button-with-input > .mat-mdc-button-base {
-  height: max(36px, 100%);
 }
