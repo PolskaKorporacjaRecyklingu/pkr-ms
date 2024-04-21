@@ -1,0 +1,109 @@
+<form [formGroup]="raportControl" class="example-form">
+  <div formGroupName="brigade">
+
+    <mat-form-field class="full-width">
+      <mat-label>Data</mat-label>
+      <input matInput formControlName="date" [matDatepicker]="picker">
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Zmiana</mat-label>
+      <input matInput formControlName="shift">
+    </mat-form-field>
+
+    <div formArrayName="leadersId">
+      <h3>Brygadziści</h3>
+      <button type="button" (click)="addLeader()">Dodaj brygadzistę</button>
+      <div *ngFor="let leader of leadersId.controls; let i=index">
+        <mat-form-field class="full-width">
+          <mat-label>Brygadzista {{i+1}}</mat-label>
+          <input matInput [formControlName]="i">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div formArrayName="forkliftOperatorsId">
+      <h3>Operator wózka</h3>
+      <button type="button" (click)="addForkliftOperator()">Dodaj operatora wózka</button>
+      <div *ngFor="let operator of forkliftOperatorsId.controls; let i=index">
+        <mat-form-field class="full-width">
+          <mat-label>Operator {{i+1}}</mat-label>
+          <input matInput [formControlName]="i">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div formArrayName="forkliftOperatorsId">
+      <h3>Skład brygady</h3>
+      <button type="button" (click)="addBrigadeEmployee()">Dodaj członka brygady</button>
+      <div *ngFor="let brigade of brigadeEmployeesId.controls; let i=index">
+        <mat-form-field class="full-width">
+          <mat-label>Pracownik {{i+1}}</mat-label>
+          <input matInput [formControlName]="i">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div formGroupName="workDone">
+    <div formGroupName="refrigerator">
+      <mat-form-field>
+        <mat-label>Liczba przerobionych lodówek</mat-label>
+        <input matInput formControlName="reworked">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Liczba odrzuconych lodówek</mat-label>
+        <input matInput formControlName="rejected" >
+      </mat-form-field>
+    </div>
+    <div formGroupName="robot">
+      <h3>Praca z robotem</h3>
+      <div>
+        <mat-label [ngClass]="'labelBeforeSlide'">Nie</mat-label>
+        <mat-slide-toggle formControlName="workWith" (click)="switchRobotDisabled()">Tak</mat-slide-toggle>
+      </div>
+
+      <mat-form-field >
+        <mat-label>Liczba godzin</mat-label>
+        <input matInput formControlName="workHours" >
+      </mat-form-field>
+    </div>
+
+    <div formGroupName="atn">
+      <h3>Praca z atn</h3>
+      <div>
+        <mat-label [ngClass]="'labelBeforeSlide'">Nie</mat-label>
+        <mat-slide-toggle formControlName="workWith" (click)="switchAtnDisabled()">Tak</mat-slide-toggle>
+      </div>
+
+      <mat-form-field >
+        <mat-label>Liczba godzin</mat-label>
+        <input matInput formControlName="workHours" >
+      </mat-form-field>
+    </div>
+  </div>
+
+
+  <div formArrayName="reportHistories">
+    <h3>Historia zmiany</h3>
+    <button type="button" (click)="addReportHistory()">Dodaj historię zmiany</button>
+    <div *ngFor="let history of reportHistories.controls; let i=index">
+      <div [formGroupName]="i">
+        <mat-form-field class="full-width">
+          <mat-label>Historia {{i+1}}</mat-label>
+          <input type="time" matInput formControlName="time">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Historia {{i+1}}</mat-label>
+          <input matInput formControlName="message">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+</form>
+<br/>
+<button (click)="showFormData()">Show data in form</button>
+<!--<p>{{raportControl.value}}</p>-->
