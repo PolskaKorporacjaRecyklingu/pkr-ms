@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+  frontend:
+    image: myapp
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+      args:
+        PROFILE: prod
+    ports:
+      - "8080:80"
