@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {shareReplay, tap} from "rxjs";
+import {of, shareReplay, tap} from "rxjs";
 import moment from "moment";
 import {environment} from "../../../../environments/environment";
 
@@ -28,18 +28,30 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   public login(email: string, password: string) {
-    return this.http.post<AuthResult>(this.urlAddress + '/api/login', {email, password})
+
+    const mockAuthResult: AuthResult = {
+      expirationDate: "2024-05-07T19:51:12.000",
+      token: "XDXDeyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWN5Y2xpbmdhZG1pbiIsImlhdCI6MTcxNTA5NjE3MiwiZXhwIjoxNzE1MDk3MDcyfQ.gGLyrPWagni78C6uV0mKi0dZFkFTPTecufUd0Vcaz3Lxt2LTuPAyl68wo7I0hPB2"
+    }
+    return of(mockAuthResult)
       .pipe(
-        tap(res => this.setSession),
-        shareReplay()
+        tap(res=> this.setSession(res)),
+        // shareReplay()
       )
+
+    // return this.http.post<AuthResult>(this.urlAddress + '/api/login', {email, password})
+    //   .pipe(
+    //     tap(res => this.setSession),
+    //     shareReplay()
+    //   )
   }
 
   private setSession(authResult: AuthResult) {
-    const expiresAt = moment().add(authResult.expirationDate, 'second')
+    const expiresAt = moment(authResult.expirationDate)
 
     localStorage.setItem(LocalStorageToken.idToken, authResult.token);
     localStorage.setItem(LocalStorageToken.expiredAt, JSON.stringify(expiresAt.valueOf()));
+
   }
 
   public logout() {

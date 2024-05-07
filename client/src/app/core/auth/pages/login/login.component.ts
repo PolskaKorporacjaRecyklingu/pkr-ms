@@ -49,8 +49,13 @@ export class LoginComponent {
     })
   }
 
+  public isLogged(): void {
+    console.log(this.authService.isLoggedIn())
+  }
+
   public showErrors() {
 
     console.log(this.loginControl.get('login'));
+    this.isLogged();
   }
 }
