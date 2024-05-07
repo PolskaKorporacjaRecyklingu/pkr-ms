@@ -51,7 +51,7 @@
                   <input matInput [formControlName]="i">
                 </mat-form-field>
                 <div class="align-button-with-input button-width">
-                  <button mat-flat-button color="primary" class="full-width">Usuń pracownika</button>
+                  <button mat-flat-button color="primary" class="full-width" (click)="deleteBrigadeEmployee(i)">Usuń pracownika</button>
                 </div>
               </div>
             </div>
@@ -121,7 +121,7 @@
                   <input matInput formControlName="message">
                 </mat-form-field>
                 <div class="align-button-with-input button-width">
-                  <button mat-flat-button color="primary" class="full-width" mat-button>Usuń</button>
+                  <button mat-flat-button color="primary" class="full-width" (click)="deleteReportHistory(i)" mat-button>Usuń</button>
                 </div>
               </div>
             </div>
@@ -134,8 +134,19 @@
 
     </mat-card-content>
   </mat-card>
+  <mat-card>
+    <mat-card-header>
+      Costam costam druga strona
+    </mat-card-header>
+    <mat-card-content>
+
+    </mat-card-content>
+  </mat-card>
 
 </form>
 <br/>
+
 <button (click)="showFormData()">Show data in form</button>
 <!--<p>{{raportControl.value}}</p>-->
+<app-manufacturing-form/>
+

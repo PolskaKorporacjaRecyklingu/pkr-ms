@@ -6,8 +6,11 @@ import {AddRaportFormComponent} from "./features/raports/pages/add-raport-form/a
 import {TemplateFormComponent} from "./shared/components/template-form/template-form.component";
 
 export const routes: Routes = [
+  {path: 'add-report', component: AddRaportFormComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'add-raport', component: AddRaportFormComponent},
+  {path: 'register', component: LoginComponent},
   {path: 'templateForm', component: TemplateFormComponent},
-  {path: '', component: HomeComponent, canActivate: [authGuard]}
+  {path: '', component: HomeComponent
+    // , canActivate: [authGuard]
+  }
 ];

@@ -9,21 +9,6 @@ interface Employee {
   fullName: FullName;
 }
 
-interface Shift {
-  shift: number;
-}
-
-interface ReportData {
-  year: number;
-  month: number;
-  day: number;
-  shift: Shift;
-}
-
-interface EmployeesCount {
-  employeesCount: number;
-}
-
 interface RefrigeratorCount {
   rejectedRefrigerators: number;
   reworkedRefrigerators: number;
@@ -39,13 +24,46 @@ interface AtnWork {
   workWithAtnHours: number;
 }
 
+interface ReportHistory {
+  time: string;
+  info: string;
+}
+
+interface Weights {
+  weights: number[];
+  count: number;
+  sumWeight?: number;
+}
+
+interface AlCuRefrigeratorWeights extends Weights {
+  alCuPackageIncomplete: number;
+}
+
+interface PsAbsRefrigeratorWeights extends Weights {
+  psAbsRefrigeratorIncompleteWeight: number;
+}
+
+interface ReportDate {
+  date: string;
+  shift: number;
+}
+
 export interface RaportURTGet {
-  reportData: ReportData;
+  reportDate: ReportDate;
   leaders: Employee[];
   forkliftOperators: Employee[];
   brigade: Employee[];
-  employeesCount: EmployeesCount;
+  employeesCount: number;
   refrigeratorCount: RefrigeratorCount;
   robotWork: RobotWork;
   atnWork: AtnWork;
+  reportHistories: ReportHistory[];
+  aggregatesWithoutOilWeights: Weights;
+  alCuRefrigeratorWeights: AlCuRefrigeratorWeights;
+  refrigeratorPowerCableWeights: Weights;
+  oilFromAggregatesWeights: Weights;
+  psAbsRefrigeratorWeights: PsAbsRefrigeratorWeights;
+  aggregatesWithOilWeights: Weights;
+  aluminiumWeights: Weights;
+  aggregatesWithOilFromWarehouseWeights: Weights;
 }

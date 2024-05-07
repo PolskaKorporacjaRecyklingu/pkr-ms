@@ -6,16 +6,16 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {
   provideNativeDateAdapter
 } from "@angular/material/core";
-import {addAriaReferencedId} from "@angular/cdk/a11y";
 import {CommonModule} from "@angular/common";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {MatCard, MatCardContent, MatCardHeader, MatCardModule} from "@angular/material/card";
+import { MatCardModule} from "@angular/material/card";
 import {MatButton} from "@angular/material/button";
+import {ManufacturingFormComponent} from "../../components/manufacturing-form/manufacturing-form.component";
 
 @Component({
   selector: 'app-add-raport-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatSlideToggleModule, MatCardModule, MatButton],
+  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatSlideToggleModule, MatCardModule, MatButton, ManufacturingFormComponent],
   templateUrl: './add-raport-form.component.html',
   styleUrl: './add-raport-form.component.css',
   providers: [provideNativeDateAdapter()]
@@ -45,6 +45,42 @@ export class AddRaportFormComponent {
       }),
     }),
     reportHistories: this.fb.array([]),
+    page2: this.fb.group({
+      aggregatesWithoutOilWeights: this.fb.group({
+        firstValue: [10],
+        secondValue: [10],
+      }),
+      alCuRefrigeratorWeights: this.fb.group({
+        firstValue: [20],
+        secondValue: [20],
+      }),
+      alCuPackageIncompleteWeight: 200,
+      refrigeratorPowerCableWeights: this.fb.group({
+        firstValue: [30],
+        secondValue: [30],
+      }),
+      oilFromAggregatesWeights: this.fb.group({
+        firstValue: [40],
+        secondValue: [40],
+      }),
+      psAbsRefrigeratorWeights: this.fb.group({
+        firstValue: [50],
+        secondValue: [50],
+      }),
+      psAbsRefrigeratorIncompleteWeight: 500,
+      aluminiumWeights: this.fb.group({
+        firstValue: [60],
+        secondValue: [60],
+      }),
+      aggregatesWithOilFromWarehouseWeights: this.fb.group({
+        firstValue: [50],
+        secondValue: [60],
+      }),
+      aggregatesWithOilWeights: this.fb.group({
+        firstValue: [50],
+        secondValue: [60],
+      }),
+    })
   });
   constructor(private fb: FormBuilder) {}
   showFormData() {
@@ -77,6 +113,10 @@ export class AddRaportFormComponent {
     this.brigadeEmployeesId.push(this.fb.control(''));
   }
 
+  deleteBrigadeEmployee(index: number): void {
+    this.brigadeEmployeesId.removeAt(index);
+  }
+
   // Getter for reportHistories FormArray
   get reportHistories(): FormArray {
     return this.raportControl.get('reportHistories') as FormArray;
@@ -89,6 +129,10 @@ export class AddRaportFormComponent {
       message: ['']
     })
     this.reportHistories.push(history);
+  }
+
+  deleteReportHistory(index: number): void {
+    this.reportHistories.removeAt(index);
   }
 
   switchRobotDisabled() {
@@ -106,13 +150,4 @@ export class AddRaportFormComponent {
       this.raportControl.get('workDone.atn.workHours')?.disable();
     }
   }
-
-
-
-  //TODO: DELETE THIS
-  logSwitchState() {
-    console.log(!!this.raportControl.get('workDone.robot.workWith')?.value)
-  }
-  protected readonly addAriaReferencedId = addAriaReferencedId;
-  protected readonly FormGroup = FormGroup;
 }
