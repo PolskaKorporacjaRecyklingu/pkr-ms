@@ -1,10 +1,6 @@
 interface ReportData {
-  year: number;
-  month: number;
-  day: number;
-  shift: {
-    shift: number;
-  };
+  date: string
+  shift: number;
 }
 
 interface RefrigeratorCount {
@@ -21,6 +17,10 @@ interface AtnWork {
   workWithAtn: boolean;
   workWithAtnHours: number;
 }
+interface ReportHistory {
+  time: string;
+  info: string;
+}
 
 export interface RaportURTPost {
   reportData: ReportData;
@@ -30,4 +30,15 @@ export interface RaportURTPost {
   refrigeratorCount: RefrigeratorCount;
   robotWork: RobotWork;
   atnWork: AtnWork;
+  reportHistories: ReportHistory[];
+  aggregatesWithoutOilWeights: number[];
+  alCuRefrigeratorWeights: number[];
+  alCuPackageIncompleteWeight: number;
+  refrigeratorPowerCableWeights: number[];
+  oilFromAggregatesWeights: number[];
+  psAbsRefrigeratorWeights: number[];
+  psAbsRefrigeratorIncompleteWeight: number;
+  aluminiumWeights: number[];
+  aggregatesWithOilFromWarehouseWeights: number[];
+  aggregatesWithOilWeights: number[];
 }

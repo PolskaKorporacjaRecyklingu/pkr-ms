@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {shareReplay, tap} from "rxjs";
 import moment from "moment";
+import {environment} from "../../../../environments/environment";
 
 export interface User {
   email: string,
@@ -9,8 +10,8 @@ export interface User {
 }
 
 export interface AuthResult {
-  expiresIn: string,
-  idToken: string
+  expirationDate: string,
+  token: string
 }
 
 enum LocalStorageToken {
@@ -22,11 +23,12 @@ enum LocalStorageToken {
   providedIn: 'root'
 })
 export class AuthService {
+  urlAddress: string = environment.apiUrl
 
   constructor(private http: HttpClient) { }
 
   public login(email: string, password: string) {
-    return this.http.post<User>('/api/login', {email, password})
+    return this.http.post<AuthResult>(this.urlAddress + '/api/login', {email, password})
       .pipe(
         tap(res => this.setSession),
         shareReplay()
@@ -34,9 +36,9 @@ export class AuthService {
   }
 
   private setSession(authResult: AuthResult) {
-    const expiresAt = moment().add(authResult.expiresIn, 'second')
+    const expiresAt = moment().add(authResult.expirationDate, 'second')
 
-    localStorage.setItem(LocalStorageToken.idToken, authResult.idToken);
+    localStorage.setItem(LocalStorageToken.idToken, authResult.token);
     localStorage.setItem(LocalStorageToken.expiredAt, JSON.stringify(expiresAt.valueOf()));
   }
 
