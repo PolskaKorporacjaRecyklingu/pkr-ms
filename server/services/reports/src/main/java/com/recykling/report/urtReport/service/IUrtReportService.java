@@ -14,7 +14,7 @@ public interface IUrtReportService {
      *
      * @param request - Input RequestCreateUrtReport object.
      */
-    void createReport(RequestCreateUrtReport request, HttpServletRequest servletRequest);
+    void createReport(RequestCreateUrtReport request);
 
     /**
      *

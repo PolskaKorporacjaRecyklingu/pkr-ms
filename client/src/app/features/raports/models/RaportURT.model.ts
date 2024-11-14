@@ -160,13 +160,13 @@ export class RaportUrtToPostRaportUrt implements Adapter<RaportURTPost> {
 //   adapt(item: RaportURTGet): RaportUrt {
 //     let dateTime = new Date(item.reportData.year, item.reportData.month - 1, item.reportData.day)
 //     let leaders = item.leaders.map(leader => {
-//       return new Employee(leader.employeeId, leader.active, leader.fullName.firstName, leader.fullName.lastName)
+//       return new EmployeeAdapter(leader.employeeId, leader.active, leader.fullName.firstName, leader.fullName.lastName)
 //     })
 //     let forkliftOperators = item.forkliftOperators.map(leader => {
-//       return new Employee(leader.employeeId, leader.active, leader.fullName.firstName, leader.fullName.lastName)
+//       return new EmployeeAdapter(leader.employeeId, leader.active, leader.fullName.firstName, leader.fullName.lastName)
 //     })
 //     let brigade = item.brigade.map(leader => {
-//       return new Employee(leader.employeeId, leader.active, leader.fullName.firstName, leader.fullName.lastName)
+//       return new EmployeeAdapter(leader.employeeId, leader.active, leader.fullName.firstName, leader.fullName.lastName)
 //     })
 //     let refrigeratorCount = {
 //       rejected: item.refrigeratorCount.rejectedRefrigerators,

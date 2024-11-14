@@ -33,10 +33,9 @@ public class UrtReportController {
     @Secured({"URT_LEADER","MANAGER", "ADMIN"})
     @PostMapping(path = "/create")
     public ResponseEntity<ResponseDto> createReport(
-            @RequestBody @Valid @NotNull RequestCreateUrtReport request,
-            HttpServletRequest servletRequest
+            @RequestBody @Valid @NotNull RequestCreateUrtReport request
     ){
-        iUrtReportService.createReport(request, servletRequest);
+        iUrtReportService.createReport(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto("201", "created"));

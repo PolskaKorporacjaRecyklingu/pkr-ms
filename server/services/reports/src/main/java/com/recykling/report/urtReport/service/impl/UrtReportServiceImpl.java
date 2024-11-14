@@ -17,6 +17,8 @@ import com.recykling.report.urtReport.repo.UrtReportRepository;
 import com.recykling.report.valueObjects.ReportDate;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
@@ -40,23 +42,20 @@ public class UrtReportServiceImpl implements IUrtReportService {
      *         second step is setting up all important info with are list of data.
      */
     @Override
-    public void createReport(RequestCreateUrtReport request, HttpServletRequest servletRequest) {
+    public void createReport(RequestCreateUrtReport request) {
         Optional<UrtReport> optionalUrtReport = urtReportRepository.findByReportDate(request.getReportDate());
 
         if (optionalUrtReport.isPresent()){
             throw new UniqueReportDateException(request.getReportDate());
         }
-        else {
-            UrtReport urtReport = buildReport(request);
+        UrtReport urtReport = buildReport(request);
+        UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            String authHeader = servletRequest.getHeader("Authorization");
-            String token = authHeader.substring(7);
-            String username = jwtService.extractUsername(token);
-            User user = userRepository.findByUsername(username).orElseThrow();
-            urtReport.getLeaders().add(user.getEmployee());
+        String username = details.getUsername();
+        User user = userRepository.findByUsername(username).orElseThrow();
+        urtReport.getLeaders().add(user.getEmployee());
+        urtReportRepository.save(urtReport);
 
-            urtReportRepository.save(urtReport);
-        }
     }
 
     /**
@@ -102,11 +101,11 @@ public class UrtReportServiceImpl implements IUrtReportService {
         if (optionalUrtReport.isEmpty()){
             throw new ResourceNotFoundException("urtReport", "ReportData", new ReportDate(date, shift).toString());
         }
-        else {
-            UrtReport urtReport = buildReport(request);
-            urtReportRepository.delete(optionalUrtReport.get());
-            return mapUrtReportToDto(urtReportRepository.save(urtReport));
-        }
+
+        UrtReport urtReport = buildReport(request);
+        urtReportRepository.delete(optionalUrtReport.get());
+        return mapUrtReportToDto(urtReportRepository.save(urtReport));
+
     }
 
     /**
